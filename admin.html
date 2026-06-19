@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - KSOME</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #f4f4f4; }
+
+    .header {
+      background: #000;
+      padding: 16px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 { color: #ff7200; font-size: 22px; }
+    .logout-btn {
+      background: #ff7200; color: white; border: none;
+      padding: 8px 18px; border-radius: 5px; cursor: pointer;
+    }
+
+    #loginSection {
+      max-width: 400px; margin: 80px auto; background: #fff;
+      padding: 40px; border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center;
+    }
+    #loginSection h2 { margin-bottom: 20px; color: #222; }
+    #loginSection input {
+      width: 100%; padding: 12px; margin-bottom: 14px;
+      border: 1px solid #ddd; border-radius: 6px; font-size: 15px;
+    }
+    #loginSection button {
+      width: 100%; padding: 12px; background: #ff7200;
+      color: white; border: none; border-radius: 6px;
+      font-size: 16px; cursor: pointer;
+    }
+    #loginMsg { color: red; margin-bottom: 12px; font-weight: bold; font-size: 14px; }
+
+    #adminPanel { display: none; max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+
+    .welcome {
+      background: linear-gradient(135deg, #ff7200, #000);
+      color: white; padding: 20px 30px; border-radius: 12px; margin-bottom: 24px;
+    }
+    .welcome h2 { font-size: 22px; margin-bottom: 4px; }
+    .welcome p { opacity: 0.8; font-size: 14px; }
+
+    .tabs {
+      display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 10px 20px; border: none; border-radius: 6px;
+      cursor: pointer; font-size: 14px; font-weight: bold;
+      background: #fff; color: #666;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .tab-btn.active { background: #ff7200; color: white; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .box {
+      background: #fff; border-radius: 12px; padding: 28px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 24px;
+    }
+    .box h2 {
+      font-size: 18px; margin-bottom: 20px; color: #222;
+      border-bottom: 2px solid #ff7200; padding-bottom: 8px;
+    }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: #fff; border-radius: 10px; padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center;
+    }
+    .stat-card h3 { font-size: 13px; color: #999; text-transform: uppercase; margin-bottom: 8px; }
+    .stat-card p { font-size: 32px; font-weight: bold; color: #ff7200; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { background: #f0f0f0; padding: 12px; text-align: left; color: #555; font-size: 13px; }
+    td { padding: 12px; border-bottom: 1px solid #f0f0f0; color: #333; }
+    tr:hover { background: #fafafa; }
+
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+    .badge-paid { background: #d4edda; color: #28a745; }
+    .badge-unpaid { background: #f8d7da; color: #dc3545; }
+
+    .mark-paid-btn {
+      background: #28a745; color: white; border: none;
+      padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;
+    }
+    .already-paid { color: #28a745; font-size: 13px; font-weight: bold; }
+
+    /* ── Upload Form ── */
+    .upload-form label {
+      display: block; font-size: 14px; font-weight: bold;
+      margin-bottom: 6px; color: #444;
+    }
+    .upload-form input,
+    .upload-form select,
+    .upload-form textarea {
+      width: 100%; padding: 10px; margin-bottom: 16px;
+      border: 1px solid #ddd; border-radius: 6px; font-size: 14px;
+    }
+    .upload-form textarea { height: 80px; resize: vertical; }
+    .upload-btn {
+      background: #ff7200; color: white; border: none;
+      padding: 12px 28px; border-radius: 6px;
+      font-size: 15px; cursor: pointer; width: 100%;
+    }
+    .upload-btn:hover { background: #000; }
+    .progress-bar {
+      display: none; width: 100%; background: #f0f0f0;
+      border-radius: 6px; margin-top: 12px; height: 12px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; background: #ff7200; width: 0%;
+      transition: width 0.3s; border-radius: 6px;
+    }
+    .upload-msg { margin-top: 12px; font-weight: bold; font-size: 14px; }
+
+    /* ── Two-column layout for upload sections ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Material/Exam List items ── */
+    .list-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px; border-radius: 8px; background: #f9f9f9; margin-bottom: 10px;
+    }
+    .list-item h4 { font-size: 15px; color: #222; margin-bottom: 4px; }
+    .list-item p { font-size: 12px; color: #888; }
+    .list-item .actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .delete-btn {
+      background: #dc3545; color: white; border: none;
+      padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 13px;
+    }
+    .type-badge {
+      padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; white-space: nowrap;
+    }
+    .type-pdf      { background: #fff3e0; color: #e65c00; }
+    .type-exam     { background: #e3f2fd; color: #1565c0; }
+    .type-test     { background: #f3e5f5; color: #6a1b9a; }
+    .type-result   { background: #e8f5e9; color: #2e7d32; }
+
+    /* ── Result input rows ── */
+    .result-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; flex-wrap: wrap; }
+    .result-row input { flex: 1; min-width: 120px; margin-bottom: 0; }
+    .result-row select { flex: 1; min-width: 120px; margin-bottom: 0; }
+    .add-row-btn {
+      background: #eee; border: none; padding: 8px 16px; border-radius: 6px;
+      cursor: pointer; font-size: 13px; margin-bottom: 16px;
+    }
+    .remove-row-btn {
+      background: #dc3545; color: white; border: none; padding: 6px 12px;
+      border-radius: 5px; cursor: pointer; font-size: 12px;
+    }
+
+    .no-data { color: #888; font-size: 14px; padding: 20px 0; text-align: center; }
+    footer { text-align: center; padding: 20px; color: #999; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>KSOME Admin</h1>
+  <button class="logout-btn" id="logoutBtn" style="display:none" onclick="adminLogout()">Log Out</button>
+</div>
+
+<!-- Login -->
+<div id="loginSection">
+  <h2>🔐 Admin Login</h2>
+  <p id="loginMsg"></p>
+  <input type="email" id="adminEmail" placeholder="Admin Email">
+  <input type="password" id="adminPassword" placeholder="Password">
+  <button onclick="adminLogin()">Login</button>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+
+  <div class="welcome">
+    <h2>Welcome, Isaac 👋</h2>
+    <p>Manage your students, materials, exams, and results from here.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card"><h3>Total Students</h3><p id="statTotal">0</p></div>
+    <div class="stat-card"><h3>Paid</h3><p id="statPaid" style="color:#28a745">0</p></div>
+    <div class="stat-card"><h3>Not Paid</h3><p id="statUnpaid" style="color:#dc3545">0</p></div>
+    <div class="stat-card"><h3>Materials</h3><p id="statPDFs">0</p></div>
+    <div class="stat-card"><h3>Exams/Tests</h3><p id="statExams">0</p></div>
+    <div class="stat-card"><h3>Results Posted</h3><p id="statResults">0</p></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('students', this)">👨‍🎓 Students</button>
+    <button class="tab-btn" onclick="switchTab('upload', this)">📤 Upload PDF</button>
+    <button class="tab-btn" onclick="switchTab('examUpload', this)">📝 Upload Exam/Test</button>
+    <button class="tab-btn" onclick="switchTab('results', this)">🏆 Post Results</button>
+    <button class="tab-btn" onclick="switchTab('materials', this)">📚 All Materials</button>
+  </div>
+
+  <!-- Tab: Students -->
+  <div id="tab-students" class="tab-content active">
+    <div class="box">
+      <h2>👨‍🎓 All Enrolled Students</h2>
+      <p id="loadingStudents" style="color:#888; font-size:14px;">Loading...</p>
+      <div style="overflow-x:auto;">
+        <table id="studentsTable" style="display:none;">
+          <thead>
+            <tr>
+              <th>Full Name</th><th>Email</th><th>Phone</th>
+              <th>Course</th><th>Mode</th><th>Payment</th><th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="studentsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Upload PDF -->
+  <div id="tab-upload" class="tab-content">
+    <div class="box" style="background:#e8f5e9; border-left: 4px solid #28a745;">
+      <h2 style="border-bottom-color:#28a745; color:#28a745;">📌 How to get a Google Drive link</h2>
+      <ol style="font-size:14px; color:#444; line-height:2; padding-left:20px;">
+        <li>Go to <strong>drive.google.com</strong> and upload your PDF</li>
+        <li>Right-click the PDF → click <strong>"Share"</strong></li>
+        <li>Change access to <strong>"Anyone with the link"</strong></li>
+        <li>Click <strong>"Copy link"</strong> and paste it below</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h2>📤 Add Course Material (Google Drive PDF)</h2>
+      <div class="upload-form">
+        <label>Material Title</label>
+        <input type="text" id="pdfTitle" placeholder="e.g. Week 1 – Introduction to Livestreaming">
+
+        <label>Course</label>
+        <select id="pdfCourse">
+          <option value="">Select Course</option>
+          <option>Video Editing</option>
+          <option>Livestreaming</option>
+          <option>Podcast Production</option>
+          <option>JET Club Training</option>
+          <option>Complete Package</option>
+        </select>
+
+        <label>Google Drive Link</label>
+        <input type="url" id="pdfDriveLink" placeholder="https://drive.google.com/file/d/....../view?usp=sharing">
+        <p style="font-size:12px; color:#888; margin-top:-12px; margin-bottom:16px;">📎 Paste the shareable Google Drive link to your PDF here</p>
+
+        <button class="upload-btn" onclick="uploadPDF()">💾 Save Material</button>
+        <p class="upload-msg" id="uploadMsg"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Upload Exam / Test -->
+  <div id="tab-examUpload" class="tab-content">
+    <div class="two-col">
+      <!-- Upload exam/test questions as PDF -->
+      <div class="box">
+        <h2>📝 Upload Exam or Test Questions</h2>
+        <div class="upload-form">
+          <label>Title</label>
+          <input type="text" id="examTitle" placeholder="e.g. Week 1 Quiz – Video Editing">
+
+          <label>Type</label>
+          <select id="examType">
+            <option value="">Select Type</option>
+            <option value="exam">Exam</option>
+            <option value="test">Test / Quiz</option>
+          </select>
+
+          <label>Course</label>
+          <select id="examCourse">
+            <option value="">Select Course</option>
+            <option>Video Editing</option>
+            <option>Livestreaming</option>
+            <option>Podcast Production</option>
+            <option>JET Club Training</option>
+            <option>Complete Package</option>
+          </select>
+
+          <label>Duration</label>
+          <input type="text" id="examDuration" placeholder="e.g. 30 minutes">
+
+          <label>Instructions (optional)</label>
+          <textarea id="examInstructions" placeholder="Any instructions for students..."></textarea>
+
+          <label>Google Drive Link (Question Paper PDF) — optional</label>
+          <input type="url" id="examDriveLink" placeholder="https://drive.google.com/file/d/....../view?usp=sharing">
+          <p style="font-size:12px;color:#888;margin-top:-12px;margin-bottom:16px;">📎 Upload PDF to Google Drive first, then paste the shareable link here</p>
+
+          <button class="upload-btn" onclick="uploadExam()">💾 Save Exam/Test</button>
+          <p class="upload-msg" id="examUploadMsg"></p>
+        </div>
+      </div>
+
+      <!-- Preview of uploaded exams -->
+      <div class="box">
+        <h2>📋 Uploaded Exams & Tests</h2>
+        <p id="loadingExamItems" style="color:#888; font-size:14px;">Loading...</p>
+        <div id="examListContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Post Results -->
+  <div id="tab-results" class="tab-content">
+    <div class="two-col">
+      <!-- Post results form -->
+      <div class="box">
+        <h2>🏆 Post Student Results</h2>
+        <div class="upload-form">
+          <label>Exam / Test Title</label>
+          <input type="text" id="resultExamTitle" placeholder="e.g. Week 1 Quiz">
+
+          <label>Course</label>
+          <select id="resultCourse">
+            <option value="">Select Course</option>
+            <option>Video Editing</option>
+            <option>Livestreaming</option>
+            <option>Podcast Production</option>
+            <option>JET Club Training</option>
+            <option>Complete Package</option>
+          </select>
+
+          <label>Type</label>
+          <select id="resultType">
+            <option value="">Select Type</option>
+            <option value="exam">Exam</option>
+            <option value="test">Test / Quiz</option>
+          </select>
+
+          <label>Student Results</label>
+          <div id="resultRows">
+            <div class="result-row">
+              <input type="email" placeholder="Student Email" class="r-email">
+              <input type="text" placeholder="Student Name" class="r-name">
+              <input type="text" placeholder="Score (e.g. 85/100)" class="r-score">
+              <select class="r-grade">
+                <option value="">Grade</option>
+                <option>A</option><option>B</option><option>C</option>
+                <option>D</option><option>F</option>
+              </select>
+              <button class="remove-row-btn" onclick="removeRow(this)">✕</button>
+            </div>
+          </div>
+          <button class="add-row-btn" onclick="addResultRow()">+ Add Another Student</button>
+
+          <button class="upload-btn" onclick="postResults()">📢 Post Results</button>
+          <p class="upload-msg" id="resultMsg"></p>
+        </div>
+      </div>
+
+      <!-- View posted results -->
+      <div class="box">
+        <h2>📊 Posted Results</h2>
+        <p id="loadingResults" style="color:#888; font-size:14px;">Loading...</p>
+        <div id="resultsListContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: All Materials -->
+  <div id="tab-materials" class="tab-content">
+    <div class="box">
+      <h2>📚 All Uploaded Materials</h2>
+      <p id="loadingPdfs" style="color:#888; font-size:14px;">Loading...</p>
+      <div id="pdfListContainer"></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 KSOME Admin Panel</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getFirestore, collection, getDocs, doc, updateDoc, addDoc, deleteDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getStorage, ref, deleteObject }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
+    authDomain: "ksome-website.firebaseapp.com",
+    projectId: "ksome-website",
+    storageBucket: "ksome-website.appspot.com",
+    messagingSenderId: "970299265208",
+    appId: "1:970299265208:web:870e4de77e51e9032e644d"
+  };
+
+  const ADMIN_EMAIL = "oladipoisaac012@gmail.com";
+
+  const app     = initializeApp(firebaseConfig);
+  const auth    = getAuth(app);
+  const db      = getFirestore(app);
+  const storage = getStorage(app);
+
+  // ── Auth ─────────────────────────────────────────────────
+  onAuthStateChanged(auth, (user) => {
+    if (user && user.email === ADMIN_EMAIL) {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("adminPanel").style.display   = "block";
+      document.getElementById("logoutBtn").style.display    = "inline-block";
+      loadAll();
+    } else if (user) {
+      signOut(auth);
+      document.getElementById("loginMsg").textContent = "❌ You are not an admin.";
+    }
+  });
+
+  window.adminLogin = async function () {
+    const email    = document.getElementById("adminEmail").value.trim();
+    const password = document.getElementById("adminPassword").value;
+    const msg      = document.getElementById("loginMsg");
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (e) {
+      msg.textContent = "❌ Wrong email or password.";
+    }
+  };
+
+  window.adminLogout = function () {
+    signOut(auth).then(() => {
+      document.getElementById("adminPanel").style.display   = "none";
+      document.getElementById("loginSection").style.display = "block";
+      document.getElementById("logoutBtn").style.display    = "none";
+    });
+  };
+
+  function loadAll() {
+    loadStudents();
+    loadPDFList();
+    loadExamItems();
+    loadResultsList();
+  }
+
+  // ── Students ─────────────────────────────────────────────
+  async function loadStudents() {
+    const tbody   = document.getElementById("studentsBody");
+    const loading = document.getElementById("loadingStudents");
+    const table   = document.getElementById("studentsTable");
+    try {
+      const snapshot = await getDocs(collection(db, "enrollments"));
+      loading.style.display = "none";
+      let total = 0, paid = 0, unpaid = 0;
+      if (snapshot.empty) {
+        loading.style.display = "block";
+        loading.textContent   = "No students enrolled yet.";
+        return;
+      }
+      table.style.display = "table";
+      tbody.innerHTML     = "";
+      snapshot.forEach((docSnap) => {
+        const d  = docSnap.data();
+        const id = docSnap.id;
+        total++; d.paid ? paid++ : unpaid++;
+        tbody.innerHTML += `
+          <tr>
+            <td>${d.fullName||"—"}</td><td>${d.email||"—"}</td><td>${d.phone||"—"}</td>
+            <td>${d.course||"—"}</td><td>${d.mode||"—"}</td>
+            <td><span class="badge ${d.paid?"badge-paid":"badge-unpaid"}">${d.paid?"✅ Paid":"❌ Not Paid"}</span></td>
+            <td>${d.paid
+              ? `<span class="already-paid">✔ Confirmed</span>`
+              : `<button class="mark-paid-btn" onclick="markAsPaid('${id}',this)">Mark as Paid</button>`
+            }</td>
+          </tr>`;
+      });
+      document.getElementById("statTotal").textContent  = total;
+      document.getElementById("statPaid").textContent   = paid;
+      document.getElementById("statUnpaid").textContent = unpaid;
+    } catch (e) {
+      loading.textContent = "Error loading students.";
+    }
+  }
+
+  window.markAsPaid = async function (docId, btn) {
+    if (!confirm("Mark this student as paid?")) return;
+    try {
+      await updateDoc(doc(db, "enrollments", docId), { paid: true });
+      btn.parentElement.innerHTML = `<span class="already-paid">✔ Confirmed</span>`;
+      const row = btn.closest("tr");
+      const badge = row.querySelector(".badge");
+      badge.className = "badge badge-paid"; badge.textContent = "✅ Paid";
+      document.getElementById("statPaid").textContent   = parseInt(document.getElementById("statPaid").textContent) + 1;
+      document.getElementById("statUnpaid").textContent = parseInt(document.getElementById("statUnpaid").textContent) - 1;
+    } catch (e) { alert("Error: " + e.message); }
+  };
+
+  // ── Save PDF Material (Google Drive link) ────────────────
+  window.uploadPDF = async function () {
+    const title     = document.getElementById("pdfTitle").value.trim();
+    const course    = document.getElementById("pdfCourse").value;
+    const driveLink = document.getElementById("pdfDriveLink").value.trim();
+    const msg       = document.getElementById("uploadMsg");
+
+    msg.textContent = "";
+
+    if (!title || !course || !driveLink) {
+      msg.style.color = "red"; msg.textContent = "❌ Please fill in title, course, and Google Drive link."; return;
+    }
+    if (!driveLink.includes("drive.google.com")) {
+      msg.style.color = "red"; msg.textContent = "❌ Please paste a valid Google Drive link."; return;
+    }
+
+    // Convert sharing link to direct preview link
+    let downloadURL = driveLink;
+    const match = driveLink.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match) {
+      downloadURL = `https://drive.google.com/file/d/${match[1]}/preview`;
+    }
+
+    msg.style.color = "#ff7200"; msg.textContent = "⏳ Saving...";
+
+    try {
+      await addDoc(collection(db, "course-materials"), {
+        title, course, type: "pdf",
+        fileName: title + ".pdf",
+        downloadURL,
+        driveLink,
+        uploadedAt: new Date().toISOString()
+      });
+
+      msg.style.color = "green"; msg.textContent = "✅ Material saved successfully!";
+      document.getElementById("pdfTitle").value = "";
+      document.getElementById("pdfCourse").value = "";
+      document.getElementById("pdfDriveLink").value = "";
+      loadPDFList();
+      document.getElementById("statPDFs").textContent = parseInt(document.getElementById("statPDFs").textContent) + 1;
+
+    } catch (error) {
+      console.error("Save error:", error);
+      msg.style.color = "red";
+      msg.textContent = "❌ Error saving: " + error.message;
+    }
+  };
+
+  // ── Save Exam / Test (Google Drive link) ─────────────────
+  window.uploadExam = async function () {
+    const title        = document.getElementById("examTitle").value.trim();
+    const type         = document.getElementById("examType").value;
+    const course       = document.getElementById("examCourse").value;
+    const duration     = document.getElementById("examDuration").value.trim();
+    const instructions = document.getElementById("examInstructions").value.trim();
+    const driveLink    = document.getElementById("examDriveLink").value.trim();
+    const msg          = document.getElementById("examUploadMsg");
+
+    msg.textContent = "";
+    if (!title || !type || !course) {
+      msg.style.color = "red"; msg.textContent = "❌ Please fill in title, type, and course."; return;
+    }
+    if (driveLink && !driveLink.includes("drive.google.com")) {
+      msg.style.color = "red"; msg.textContent = "❌ Please paste a valid Google Drive link."; return;
+    }
+
+    // Convert to preview link if drive link provided
+    let downloadURL = null;
+    if (driveLink) {
+      const match = driveLink.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      downloadURL = match
+        ? `https://drive.google.com/file/d/${match[1]}/preview`
+        : driveLink;
+    }
+
+    msg.style.color = "#ff7200"; msg.textContent = "⏳ Saving...";
+
+    try {
+      await addDoc(collection(db, "exams-tests"), {
+        title, type, course, duration, instructions,
+        downloadURL, driveLink: driveLink || null,
+        fileName: title + ".pdf",
+        uploadedAt: new Date().toISOString()
+      });
+
+      msg.style.color = "green"; msg.textContent = "✅ Exam/Test saved successfully!";
+      document.getElementById("examTitle").value = "";
+      document.getElementById("examType").value = "";
+      document.getElementById("examCourse").value = "";
+      document.getElementById("examDuration").value = "";
+      document.getElementById("examInstructions").value = "";
+      document.getElementById("examDriveLink").value = "";
+      loadExamItems();
+      document.getElementById("statExams").textContent = parseInt(document.getElementById("statExams").textContent) + 1;
+
+    } catch (error) {
+      console.error("Exam save error:", error);
+      msg.style.color = "red";
+      msg.textContent = "❌ Error saving: " + error.message;
+    }
+  };
+
+  // ── Load Exam Items ───────────────────────────────────────
+  async function loadExamItems() {
+    const container = document.getElementById("examListContainer");
+    const loading   = document.getElementById("loadingExamItems");
+    try {
+      const snapshot = await getDocs(collection(db, "exams-tests"));
+      loading.style.display = "none";
+      document.getElementById("statExams").textContent = snapshot.size;
+      if (snapshot.empty) { container.innerHTML = "<p style='color:#888;'>No exams uploaded yet.</p>"; return; }
+      container.innerHTML = "";
+      snapshot.forEach((docSnap) => {
+        const d = docSnap.data();
+        container.innerHTML += `
+          <div class="list-item">
+            <div>
+              <h4>${d.type==="exam"?"📋":"📝"} ${d.title}</h4>
+              <p>${d.course} • ${d.duration||"No duration set"}</p>
+            </div>
+            <div class="actions">
+              <span class="type-badge type-${d.type}">${d.type.toUpperCase()}</span>
+              <button class="delete-btn" onclick="deleteItem('exams-tests','${docSnap.id}','${d.storagePath||""}')">🗑</button>
+            </div>
+          </div>`;
+      });
+    } catch (e) { loading.textContent = "Error loading exams."; }
+  }
+
+  // ── Post Results ──────────────────────────────────────────
+  window.postResults = async function () {
+    const examTitle = document.getElementById("resultExamTitle").value.trim();
+    const course    = document.getElementById("resultCourse").value;
+    const type      = document.getElementById("resultType").value;
+    const msg       = document.getElementById("resultMsg");
+
+    if (!examTitle || !course || !type) {
+      msg.style.color = "red"; msg.textContent = "❌ Please fill exam title, course, and type."; return;
+    }
+
+    const rows = document.querySelectorAll("#resultRows .result-row");
+    const results = [];
+    rows.forEach(row => {
+      const email = row.querySelector(".r-email").value.trim();
+      const name  = row.querySelector(".r-name").value.trim();
+      const score = row.querySelector(".r-score").value.trim();
+      const grade = row.querySelector(".r-grade").value;
+      if (email && score) results.push({ email, studentName: name, score, grade });
+    });
+
+    if (results.length === 0) {
+      msg.style.color = "red"; msg.textContent = "❌ Add at least one student result."; return;
+    }
+
+    try {
+      const batch = results.map(r =>
+        addDoc(collection(db, "exam-results"), {
+          ...r, examTitle, course, type,
+          submittedAt: new Date().toISOString()
+        })
+      );
+      await Promise.all(batch);
+      msg.style.color = "green"; msg.textContent = `✅ ${results.length} result(s) posted successfully!`;
+      document.getElementById("resultExamTitle").value = "";
+      document.getElementById("resultCourse").value = "";
+      document.getElementById("resultType").value = "";
+      // Reset rows to one empty row
+      document.getElementById("resultRows").innerHTML = `
+        <div class="result-row">
+          <input type="email" placeholder="Student Email" class="r-email">
+          <input type="text" placeholder="Student Name" class="r-name">
+          <input type="text" placeholder="Score (e.g. 85/100)" class="r-score">
+          <select class="r-grade"><option value="">Grade</option>
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
+          </select>
+          <button class="remove-row-btn" onclick="removeRow(this)">✕</button>
+        </div>`;
+      loadResultsList();
+      document.getElementById("statResults").textContent = parseInt(document.getElementById("statResults").textContent) + results.length;
+    } catch (e) {
+      msg.style.color = "red"; msg.textContent = "❌ Error: " + e.message;
+    }
+  };
+
+  window.addResultRow = function () {
+    const row = document.createElement("div");
+    row.className = "result-row";
+    row.innerHTML = `
+      <input type="email" placeholder="Student Email" class="r-email">
+      <input type="text" placeholder="Student Name" class="r-name">
+      <input type="text" placeholder="Score (e.g. 85/100)" class="r-score">
+      <select class="r-grade"><option value="">Grade</option>
+        <option>A</option><option>B</option><option>C</option><option>D</option><option>F</option>
+      </select>
+      <button class="remove-row-btn" onclick="removeRow(this)">✕</button>`;
+    document.getElementById("resultRows").appendChild(row);
+  };
+
+  window.removeRow = function (btn) {
+    const rows = document.querySelectorAll("#resultRows .result-row");
+    if (rows.length > 1) btn.closest(".result-row").remove();
+  };
+
+  // ── Load Results List ─────────────────────────────────────
+  async function loadResultsList() {
+    const container = document.getElementById("resultsListContainer");
+    const loading   = document.getElementById("loadingResults");
+    try {
+      const snapshot = await getDocs(collection(db, "exam-results"));
+      loading.style.display = "none";
+      document.getElementById("statResults").textContent = snapshot.size;
+      if (snapshot.empty) { container.innerHTML = "<p style='color:#888;'>No results posted yet.</p>"; return; }
+
+      // Group by examTitle
+      const groups = {};
+      snapshot.forEach(docSnap => {
+        const d = docSnap.data();
+        const key = d.examTitle + " | " + d.course;
+        if (!groups[key]) groups[key] = { examTitle: d.examTitle, course: d.course, type: d.type, students: [] };
+        groups[key].students.push({ ...d, id: docSnap.id });
+      });
+
+      container.innerHTML = "";
+      Object.values(groups).forEach(g => {
+        const rows = g.students.map(s =>
+          `<tr><td>${s.studentName||"—"}</td><td>${s.email}</td><td>${s.score}</td><td><strong>${s.grade||"—"}</strong></td></tr>`
+        ).join("");
+        container.innerHTML += `
+          <div class="list-item" style="flex-direction:column; align-items:stretch; gap:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div><h4>🏆 ${g.examTitle}</h4><p>${g.course}</p></div>
+              <span class="type-badge type-${g.type||"exam"}">${(g.type||"exam").toUpperCase()}</span>
+            </div>
+            <table style="font-size:13px;">
+              <thead><tr><th>Name</th><th>Email</th><th>Score</th><th>Grade</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>`;
+      });
+    } catch (e) { loading.textContent = "Error loading results."; }
+  }
+
+  // ── Load PDF List ─────────────────────────────────────────
+  async function loadPDFList() {
+    const container = document.getElementById("pdfListContainer");
+    const loading   = document.getElementById("loadingPdfs");
+    try {
+      const snapshot = await getDocs(collection(db, "course-materials"));
+      loading.style.display = "none";
+      document.getElementById("statPDFs").textContent = snapshot.size;
+      if (snapshot.empty) { container.innerHTML = "<p style='color:#888;'>No materials uploaded yet.</p>"; return; }
+      container.innerHTML = "";
+      snapshot.forEach((docSnap) => {
+        const d = docSnap.data();
+        container.innerHTML += `
+          <div class="list-item">
+            <div>
+              <h4>📄 ${d.title}</h4>
+              <p>${d.course} • ${d.fileName}</p>
+            </div>
+            <div class="actions">
+              <span class="type-badge type-pdf">PDF</span>
+              <button class="delete-btn" onclick="deleteItem('course-materials','${docSnap.id}','${d.storagePath||""}')">🗑 Delete</button>
+            </div>
+          </div>`;
+      });
+    } catch (e) { loading.textContent = "Error loading materials."; }
+  }
+
+  // ── Delete Item ───────────────────────────────────────────
+  window.deleteItem = async function (collectionName, docId, storagePath) {
+    if (!confirm("Delete this item?")) return;
+    try {
+      await deleteDoc(doc(db, collectionName, docId));
+      if (storagePath) { try { await deleteObject(ref(storage, storagePath)); } catch (_) {} }
+      if (collectionName === "course-materials") loadPDFList();
+      else if (collectionName === "exams-tests") loadExamItems();
+    } catch (e) { alert("Error: " + e.message); }
+  };
+
+  // ── Legacy delete alias ───────────────────────────────────
+  window.deletePDF = (id, path) => window.deleteItem("course-materials", id, path);
+
+  // ── Tab Switching ─────────────────────────────────────────
+  window.switchTab = function (tabName, btn) {
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.getElementById("tab-" + tabName).classList.add("active");
+    btn.classList.add("active");
+  };
+</script>
+<a href="index.html" style="display:block;text-align:center;padding:16px;color:#ff7200;font-size:14px;">← Back to Home</a>
+</body>
+</html>

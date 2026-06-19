@@ -1,0 +1,204 @@
+‎<!DOCTYPE html>
+‎<html lang="en">
+‎<head>
+‎  <meta charset="UTF-8">
+‎  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‎  <title>My Dashboard – KSOME</title>
+‎  <link rel="stylesheet" href="style.css">
+‎</head>
+‎<body>
+‎
+‎<nav class="navbar">
+‎  <a href="index.html" class="nav-logo">KSOME</a>
+‎  <ul class="nav-links">
+‎    <li><a href="index.html">Home</a></li>
+‎    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+‎    <li><a href="my-course.html">Courses</a></li>
+‎    <li><a href="contact.html">Contact</a></li>
+‎  </ul>
+‎  <div class="nav-actions">
+‎    <button class="btn-outline" onclick="logoutStudent()">Logout</button>
+‎  </div>
+‎  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+‎    <span></span><span></span><span></span>
+‎  </button>
+‎</nav>
+‎
+‎<div class="mobile-menu" id="mobileMenu">
+‎  <a href="index.html">Home</a>
+‎  <a href="dashboard.html">Dashboard</a>
+‎  <a href="my-course.html">Courses</a>
+‎  <a href="contact.html">Contact</a>
+‎  <a href="#" onclick="logoutStudent()">Logout</a>
+‎</div>
+‎
+‎<div class="page admin-page" style="padding-top: 6rem;">
+‎
+‎  <div id="loadingState" style="text-align:center; padding: 4rem 0;">
+‎    <p style="color: var(--muted); font-size: 1rem;">⏳ Loading your dashboard...</p>
+‎  </div>
+‎
+‎  <div id="noEnrollment" style="display:none; text-align:center; padding: 4rem 1rem; max-width: 480px; margin: 0 auto;">
+‎    <h2 style="font-family:'Montserrat',sans-serif; color: var(--dark); margin-bottom: 1rem;">No Enrollment Found</h2>
+‎    <p style="color: var(--muted); margin-bottom: 2rem;">We couldn't find an enrollment linked to this device. Please enroll first to access your dashboard.</p>
+‎    <a href="Enroll.html" class="btn-primary">Enroll Now</a>
+‎  </div>
+‎
+‎  <div id="dashboardContent" style="display:none;">
+‎
+‎    <div class="admin-header">
+‎      <h1 id="greeting">Welcome back!</h1>
+‎    </div>
+‎
+‎    <div class="admin-stats">
+‎      <div class="stat-card">
+‎        <div class="num" id="courseLabel">—</div>
+‎        <div class="label">Enrolled Course</div>
+‎      </div>
+‎      <div class="stat-card">
+‎        <div class="num" id="modeLabel">—</div>
+‎        <div class="label">Training Mode</div>
+‎      </div>
+‎      <div class="stat-card">
+‎        <div class="num" id="paymentStatus">—</div>
+‎        <div class="label">Payment Status</div>
+‎      </div>
+‎    </div>
+‎
+‎    <div class="admin-table-box" style="padding: 2rem; margin-bottom: 1.5rem;">
+‎      <h2 style="border:none; padding:0; margin-bottom: 1.25rem;">My Enrollment Details</h2>
+‎
+‎      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+‎        <div>
+‎          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Full Name</div>
+‎          <div id="dName" style="font-weight: 600; color: var(--dark);">—</div>
+‎        </div>
+‎        <div>
+‎          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Email</div>
+‎          <div id="dEmail" style="font-weight: 600; color: var(--dark);">—</div>
+‎        </div>
+‎        <div>
+‎          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Phone</div>
+‎          <div id="dPhone" style="font-weight: 600; color: var(--dark);">—</div>
+‎        </div>
+‎        <div>
+‎          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Enrolled On</div>
+‎          <div id="dDate" style="font-weight: 600; color: var(--dark);">—</div>
+‎        </div>
+‎      </div>
+‎    </div>
+‎
+‎    <div id="unpaidNotice" style="display:none; background: #fff3e0; border-left: 4px solid var(--orange); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;">
+‎      <h3 style="font-family:'Montserrat',sans-serif; color: var(--dark); margin-bottom: 0.5rem; font-size: 1rem;">⚠️ Payment Pending</h3>
+‎      <p style="color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem;">Your enrollment is saved, but payment hasn't been confirmed yet. Complete payment to unlock full course access.</p>
+‎      <a href="payment.html" class="btn-primary">Complete Payment</a>
+‎    </div>
+‎
+‎    <div id="paidContent" style="display:none;">
+‎      <div class="admin-table-box" style="padding: 2rem;">
+‎        <h2 style="border:none; padding:0; margin-bottom: 1rem;">🎉 Welcome to Your Course</h2>
+‎        <p style="color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem;">
+‎          Your payment has been confirmed and you're officially enrolled! Our team will reach out via email or phone with your class schedule, learning materials, and access details.
+‎        </p>
+‎        <div class="learn-grid" style="margin-top: 0;">
+‎          <div class="learn-card"><span class="ci">📅</span>Schedule Coming Soon</div>
+          <div class="learn-card"><span class="ci">📚</span>Materials Coming Soon</div>
+          <div class="learn-card"><span class="ci">👥</span>Class Group Invite</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
+    authDomain: "ksome-website.firebaseapp.com",
+    projectId: "ksome-website",
+    storageBucket: "ksome-website.appspot.com",
+    messagingSenderId: "970299265208",
+    appId: "1:970299265208:web:870e4de77e51e9032e644d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+  const enrollmentId = localStorage.getItem("ksome_enrollment_id");
+
+  async function loadDashboard() {
+    const loading       = document.getElementById("loadingState");
+    const noEnrollment  = document.getElementById("noEnrollment");
+    const content       = document.getElementById("dashboardContent");
+
+    if (!enrollmentId) {
+      loading.style.display = "none";
+      noEnrollment.style.display = "block";
+      return;
+    }
+
+    try {
+      const snap = await getDoc(doc(db, "enrollments", enrollmentId));
+
+      if (!snap.exists()) {
+        loading.style.display = "none";
+        noEnrollment.style.display = "block";
+        return;
+     }
+
+      const data = snap.data();
+
+      document.getElementById("greeting").textContent  = `Welcome back, ${data.fullName}!`;
+      document.getElementById("dName").textContent      = data.fullName || "—";
+      document.getElementById("dEmail").textContent      = data.email || "—";
+      document.getElementById("dPhone").textContent      = data.phone || "—";
+      document.getElementById("courseLabel").textContent = data.course || "—";
+      document.getElementById("modeLabel").textContent   = data.mode || "—";
+
+      if (data.enrolledAt) {
+        document.getElementById("dDate").textContent = new Date(data.enrolledAt).toLocaleDateString();
+      }
+
+      const paymentStatusEl = document.getElementById("paymentStatus");
+
+      if (data.paid) {
+        paymentStatusEl.textContent = "Paid ✅";
+        document.getElementById("paidContent").style.display = "block";
+        document.getElementById("unpaidNotice").style.display = "none";
+      } else {
+        paymentStatusEl.textContent = "Pending";
+        document.getElementById("unpaidNotice").style.display = "block";
+        document.getElementById("paidContent").style.display = "none";
+      }
+
+      loading.style.display = "none";
+      content.style.display = "block";
+
+    } catch (error) {
+      console.error("Dashboard load error:", error);
+      loading.style.display = "none";
+      noEnrollment.style.display = "block";
+    }
+  }
+
+  loadDashboard();
+
+  window.logoutStudent = function () {
+    localStorage.removeItem("ksome_enrollment_id");
+    localStorage.removeItem("ksome_student_email");
+    localStorage.removeItem("ksome_student_name");
+    window.location = "index.html";
+  };
+</script>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

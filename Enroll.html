@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enroll – KSOME</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">KSOME</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="service.html">Services</a></li>
+    <li><a href="my-course.html">My Courses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="Enroll.html" class="btn-primary">Enroll Now</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="service.html">Services</a>
+  <a href="my-course.html">My Courses</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html">Login</a>
+  <a href="Enroll.html" style="color: var(--orange);">Enroll Now</a>
+</div>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="section-label" style="text-align:center; margin-bottom:1rem; color:var(--orange);">Get Started</div>
+    <h1>Enroll in KSOME</h1>
+    <p>Take the first step toward building your digital media career. Fill out the form below and we'll be in touch.</p>
+  </div>
+
+  <div class="enroll-wrapper">
+
+    <!-- LEFT INFO -->
+    <div class="enroll-info">
+      <h2>Why Join KSOME?</h2>
+      <p>Thousands of students have transformed their skills and careers with KSOME. Here's what you get when you enroll:</p>
+      <ul class="check-list">
+        <li>Hands-on, practical training from day one</li>
+        <li>Beginner-friendly curriculum with advanced tracks</li>
+        <li>Certificate of completion recognized in the industry</li>
+        <li>Personal mentorship from experienced professionals</li>
+        <li>Choose online or physical training — your schedule</li>
+        <li>Access to a community of creators and collaborators</li>
+        <li>Industry-standard software and equipment training</li>
+      </ul>
+      <a href="my-course.html" class="btn-outline" style="margin-top:1.5rem; display:inline-block; color:var(--orange); border-color:var(--orange);">Browse All Courses</a>
+    </div>
+
+    <!-- ENROLL FORM -->
+    <div class="enroll-form-box">
+      <h3>Course Enrollment Form</h3>
+      <p id="enrollMsg" style="font-weight:700; margin-bottom: 0.75rem;"></p>
+
+      <div class="form-group">
+        <label class="dark">Full Name *</label>
+        <input type="text" id="fullName" class="light" placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label class="dark">Email Address *</label>
+        <input type="email" id="email" class="light" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label class="dark">Phone Number *</label>
+        <input type="tel" id="phone" class="light" placeholder="Enter your phone number">
+      </div>
+      <div class="form-group">
+        <label class="dark">Gender *</label>
+        <select id="gender" class="light">
+          <option value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="dark">Course Interested In *</label>
+        <select id="course" class="light">
+          <option value="">Select Course</option>
+          <option>Video Editing</option>
+          <option>Livestreaming</option>
+          <option>Podcast Production</option>
+          <option>JET Club Training</option>
+          <option>Complete Package</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="dark">Training Mode *</label>
+        <select id="mode" class="light">
+          <option value="">Select Mode</option>
+          <option>Physical</option>
+          <option>Online</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="dark">Why do you want to join?</label>
+        <textarea id="reason" class="light" rows="4" placeholder="Tell us your goals..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%; padding:0.85rem; font-size:1rem;" onclick="submitEnrollment()">Submit Enrollment</button>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">KSOME</div>
+      <p>Empowering individuals with practical digital media skills. Learn. Create. Broadcast. Succeed.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Courses</h4>
+      <ul>
+        <li><a href="my-course.html">All Courses</a></li>
+        <li><a href="Enroll.html">Enroll Now</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 KSOME Companies Limited. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
+    authDomain: "ksome-website.firebaseapp.com",
+    projectId: "ksome-website",
+    storageBucket: "ksome-website.appspot.com",
+    messagingSenderId: "970299265208",
+    appId: "1:970299265208:web:870e4de77e51e9032e644d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  window.submitEnrollment = async function () {
+    const fullName = document.getElementById("fullName").value.trim();
+    const email    = document.getElementById("email").value.trim();
+    const phone    = document.getElementById("phone").value.trim();
+    const gender   = document.getElementById("gender").value;
+    const course   = document.getElementById("course").value;
+    const mode     = document.getElementById("mode").value;
+    const reason   = document.getElementById("reason").value.trim();
+    const msg      = document.getElementById("enrollMsg");
+    const btn      = document.querySelector("button[onclick='submitEnrollment()']");
+
+    if (!fullName || !email || !phone || !gender || !course || !mode) {
+      msg.className = 'msg-error';
+      msg.textContent = "❌ Please fill in all required fields.";
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = "Saving...";
+    msg.className   = 'msg-pending';
+    msg.textContent = "⏳ Submitting your enrollment...";
+
+    try {
+      const docRef = await addDoc(collection(db, "enrollments"), {
+        fullName, email, phone, gender, course, mode, reason,
+        paid: false,
+        enrolledAt: new Date().toISOString()
+      });
+
+      localStorage.setItem("ksome_enrollment_id", docRef.id);
+      localStorage.setItem("ksome_student_email", email);
+      localStorage.setItem("ksome_student_name", fullName);
+
+
+      msg.className   = 'msg-success';
+      msg.textContent = "✅ Enrollment saved! Redirecting to payment...";
+      setTimeout(() => { window.location = "payment.html"; }, 500);
+
+    } catch (error) {
+      console.error("Enrollment error:", error);
+      msg.className = 'msg-error';
+
+      if (error.code === "permission-denied") {
+        msg.textContent = "❌ Permission denied — please check your Firebase Firestore rules.";
+      } else if (error.code === "unavailable") {
+        msg.textContent = "❌ No internet connection. Please try again.";
+      } else {
+        msg.textContent = "❌ Error (" + error.code + "): " + error.message;
+      }
+
+      btn.disabled    = false;
+      btn.textContent = "Submit Enrollment";
+    }
+  };
+</script>
+
+</body>
+</html>

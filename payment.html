@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment – KSOME</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="auth-page">
+  <div class="auth-box" style="max-width: 520px; text-align:center;">
+    <div class="auth-logo">KSOME</div>
+    <h2>Complete Your Payment</h2>
+    <p class="sub" id="welcomeMsg">Select your preferred payment method to complete enrollment.</p>
+
+    <p id="payMsg" style="font-weight:700; margin-bottom:1rem;"></p>
+
+    <button class="btn-primary" style="width:100%; padding:0.85rem; margin-bottom:0.75rem;" onclick="showBankDetails()">
+      🏦 Bank Transfer
+    </button>
+    <button class="btn-outline" style="width:100%; padding:0.85rem; color:#fff; border-color:rgba(255,255,255,0.3);" onclick="payWithCard()">
+      💳 Pay With Card
+    </button>
+
+    <div id="bankDetails" style="display:none; margin-top:1.5rem; text-align:left; background:rgba(255,255,255,0.05); border:1px solid var(--orange); border-radius:10px; padding:1.5rem;">
+      <h3 style="color:#fff; margin-bottom:1rem;">Bank Transfer Details</h3>
+     <p style="color:rgba(255,255,255,0.8); margin-bottom:0.5rem;"><strong>Bank:</strong> First Bank</p>
+      <p style="color:rgba(255,255,255,0.8); margin-bottom:0.5rem;"><strong>Account Number:</strong> 3226618547</p>
+      <p style="color:rgba(255,255,255,0.8); margin-bottom:1rem;"><strong>Account Name:</strong> Isaac Kayode Oladipo</p>
+      <p style="color:rgba(255,255,255,0.55); font-size:0.85rem; margin-bottom:1rem;">After making payment, click below to confirm and access your dashboard.</p>
+      <button class="btn-primary" style="width:100%; padding:0.85rem;" onclick="confirmPayment()">
+        I Have Made Payment
+      </button>
+    </div>
+
+    <div class="auth-link" style="margin-top:1.5rem;">
+      <a href="Enroll.html" style="color:rgba(255,255,255,0.4); font-size:0.85rem;">← Back to Enrollment</a>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
+    authDomain: "ksome-website.firebaseapp.com",
+    projectId: "ksome-website",
+    storageBucket: "ksome-website.appspot.com",
+    messagingSenderId: "970299265208",
+    appId: "1:970299265208:web:870e4de77e51e9032e644d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  const enrollmentId = localStorage.getItem("ksome_enrollment_id");
+  const studentName  = localStorage.getItem("ksome_student_name");
+
+  if (studentName) {
+    document.getElementById("welcomeMsg").textContent =
+      `Hi ${studentName}, select your preferred payment method to complete enrollment.`;
+  }
+
+  if (!enrollmentId) {
+    document.getElementById("payMsg").style.color = "orange";
+    document.getElementById("payMsg").textContent =
+      "⚠️ No enrollment found. Please enroll first before making payment.";
+  }
+
+  window.showBankDetails = function () {
+    document.getElementById("bankDetails").style.display = "block";
+  };
+
+  window.payWithCard = function () {
+    window.location.href = "https://paystack.shop/pay/ksome";
+  };
+
+  window.confirmPayment = async function () {
+    const msg = document.getElementById("payMsg");
+
+    if (!enrollmentId) {
+      msg.style.color = "red";
+      msg.textContent = "❌ No enrollment record found. Please enroll again.";
+      return;
+    }
+
+    if (!navigator.onLine) {
+      msg.style.color = "red";
+      msg.textContent = "❌ No internet connection. Please try again.";
+      return;
+    }
+
+    msg.style.color = "orange";
+    msg.textContent = "⏳ Confirming your payment...";
+
+    try {
+      await updateDoc(doc(db, "enrollments", enrollmentId), {
+        paid: true,
+        paidAt: new Date().toISOString()
+      });
+
+      msg.style.color = "green";
+      msg.textContent = "✅ Payment confirmed! Redirecting to your dashboard...";
+      setTimeout(() => { window.location = "dashboard.html"; }, 1200);
+
+    } catch (error) {
+      console.error("Payment confirmation error:", error);
+      msg.style.color = "red";
+      msg.textContent = "❌ Error confirming payment: " + error.message;
+    }
+  };
+</script>
+
+</body>
+</html>

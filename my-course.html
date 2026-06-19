@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Courses – KSOME</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">KSOME</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="service.html">Services</a></li>
+    <li><a href="my-course.html" class="active">My Courses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="Enroll.html" class="btn-primary">Enroll Now</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="service.html">Services</a>
+  <a href="my-course.html">My Courses</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html">Login</a>
+  <a href="Enroll.html" style="color: var(--orange);">Enroll Now</a>
+</div>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="section-label" style="text-align:center; margin-bottom:1rem; color:var(--orange);">Curriculum</div>
+    <h1>Our Courses</h1>
+    <p>Choose the course that fits your goals. Every program is built around practical, hands-on learning — no fluff, just real skills.</p>
+  </div>
+
+  <section class="section">
+    <div class="section-label">Available Programs</div>
+    <h2 class="section-title">Explore All Courses</h2>
+    <p class="section-sub">From beginner basics to advanced broadcast techniques — there's a course for every level.</p>
+
+    <div class="course-grid">
+
+      <div class="course-card">
+        <div class="course-card-img">🎬</div>
+        <div class="course-card-body">
+          <h3>Video Editing Fundamentals</h3>
+          <p>Master the essentials of professional video editing. Learn cuts, transitions, color grading, and export settings using industry-standard tools.</p>
+          <div class="course-meta">
+            <span>🕐 4 Weeks</span>
+            <span>🌐 Online & Physical</span>
+            <span class="badge badge-green">Beginner</span>
+          </div>
+          <a href="Enroll.html" class="btn-primary" style="width:100%; text-align:center; display:block; padding: 0.65rem;">Enroll in This Course</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-card-img">📡</div>
+        <div class="course-card-body">
+          <h3>Livestream Production</h3>
+          <p>Set up and manage live broadcasts for events, churches, and online platforms. Learn camera routing, audio mixing, and streaming software.</p>
+          <div class="course-meta">
+            <span>🕐 4 Weeks</span>
+            <span>🌐 Online & Physical</span>
+            <span class="badge badge-green">Beginner</span>
+          </div>
+          <a href="Enroll.html" class="btn-primary" style="width:100%; text-align:center; display:block; padding: 0.65rem;">Enroll in This Course</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-card-img">🎙</div>
+        <div class="course-card-body">
+          <h3>Podcast Production</h3>
+          <p>From recording your first episode to growing a loyal audience. Learn mic technique, editing, show structure, and how to publish and promote.</p>
+          <div class="course-meta">
+            <span>🕐 3 Weeks</span>
+            <span>🌐 Online & Physical</span>
+            <span class="badge badge-orange">Intermediate</span>
+          </div>
+          <a href="Enroll.html" class="btn-primary" style="width:100%; text-align:center; display:block; padding: 0.65rem;">Enroll in This Course</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-card-img">📷</div>
+        <div class="course-card-body">
+          <h3>Camera & Audio Mastery</h3>
+          <p>Learn professional camera operation, framing, lighting, and audio capture. Produce broadcast-quality video from any device.</p>
+          <div class="course-meta">
+            <span>🕐 3 Weeks</span>
+            <span>🌐 Online & Physical</span>
+            <span class="badge badge-orange">Intermediate</span>
+          </div>
+          <a href="Enroll.html" class="btn-primary" style="width:100%; text-align:center; display:block; padding: 0.65rem;">Enroll in This Course</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-card-img">🌐</div>
+        <div class="course-card-body">
+          <h3>Social Media Content Creation</h3>
+          <p>Build a content brand on YouTube, Instagram, Facebook, and TikTok. Learn strategy, scripting, shooting, and scheduling for consistent growth.</p>
+          <div class="course-meta">
+            <span>🕐 4 Weeks</span>
+            <span>🌐 Online & Physical</span>
+            <span class="badge badge-green">Beginner</span>
+          </div>
+          <a href="Enroll.html" class="btn-primary" style="width:100%; text-align:center; display:block; padding: 0.65rem;">Enroll in This Course</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <div class="course-card-img">🏆</div>
+        <div class="course-card-body">
+          <h3>Complete Package</h3>
+          <p>The full KSOME experience — all courses combined into one comprehensive program. Best value for those serious about a digital media career.</p>
+          <div class="course-meta">
+            <span>🕐 12 Weeks</span>
+            <span>🌐 Online & Physical</span>
+            <span class="badge badge-orange">All Levels</span>
+          </div>
+          <a href="Enroll.html" class="btn-primary" style="width:100%; text-align:center; display:block; padding: 0.65rem;">Enroll in This Course</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <h2>Not Sure Which Course is Right for You?</h2>
+    <p>Reach out to our team and we'll help you find the perfect program for your goals, schedule, and budget.</p>
+    <a href="contact.html" class="btn-white">Talk to Us</a>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">KSOME</div>
+      <p>Empowering individuals with practical digital media skills. Learn. Create. Broadcast. Succeed.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="my-course.html">My Courses</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Started</h4>
+      <ul>
+        <li><a href="Enroll.html">Enroll Now</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="mailto:ksome.cl@gmail.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 KSOME Companies Limited. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

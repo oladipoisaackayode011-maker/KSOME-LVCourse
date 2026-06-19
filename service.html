@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services – KSOME</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">KSOME</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="service.html" class="active">Services</a></li>
+    <li><a href="my-course.html">My Courses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="Enroll.html" class="btn-primary">Enroll Now</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="service.html">Services</a>
+  <a href="my-course.html">My Courses</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html">Login</a>
+  <a href="Enroll.html" style="color: var(--orange);">Enroll Now</a>
+</div>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="section-label" style="text-align:center; margin-bottom:1rem; color:var(--orange);">What We Offer</div>
+    <h1>Our Services</h1>
+    <p>Practical, professional services designed to equip individuals, organizations, and businesses with the skills and solutions they need to succeed in digital media.</p>
+  </div>
+
+  <section class="section">
+    <div class="services-grid">
+
+      <div class="service-card">
+        <span class="si">🎥</span>
+        <h2>Livestreaming Services</h2>
+        <p>We provide professional livestreaming solutions for churches, events, conferences, seminars, and special programs — ensuring your message reaches the world in real time with high-quality broadcast production.</p>
+      </div>
+
+      <div class="service-card">
+        <span class="si">🎙</span>
+        <h2>Podcast Production</h2>
+        <p>From recording and editing to publishing and promotion — we help individuals and organizations create quality podcasts that build an audience and establish authority in their space.</p>
+      </div>
+
+      <div class="service-card">
+        <span class="si">🎬</span>
+        <h2>Video Editing Training</h2>
+        <p>Learn professional video editing skills through our online and physical training programs. Designed for beginners and advanced learners — you'll master industry-standard tools and workflows.</p>
+      </div>
+
+      <div class="service-card">
+        <span class="si">🚀</span>
+        <h2>JET Clubs Training</h2>
+        <p>We train students and individuals in building innovative projects through JET Club activities — developing practical skills, teamwork, creativity, and problem-solving abilities that employers value.</p>
+      </div>
+
+      <div class="service-card">
+        <span class="si">🌐</span>
+        <h2>Online & Physical Training</h2>
+        <p>All our programs can be delivered online or in person. Whether you're across town or across the country, KSOME brings world-class training directly to you — on your schedule.</p>
+      </div>
+
+      <div class="service-card">
+        <span class="si">📱</span>
+        <h2>Content Creation Coaching</h2>
+        <p>Build a sustainable content creation brand. We coach you on strategy, production, and growth — everything you need to turn your passion into a professional digital presence.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <h2>Need a Service? Let's Talk.</h2>
+    <p>Whether you're a church, business, student, or creator — KSOME has a solution for you.</p>
+    <a href="contact.html" class="btn-white">Get in Touch</a>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">KSOME</div>
+      <p>Empowering individuals with practical digital media skills. Learn. Create. Broadcast. Succeed.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="my-course.html">My Courses</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Started</h4>
+      <ul>
+        <li><a href="Enroll.html">Enroll Now</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="mailto:ksome.cl@gmail.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 KSOME Companies Limited. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>

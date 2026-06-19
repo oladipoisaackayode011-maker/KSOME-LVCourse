@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KSOME – Livestreaming & Video Edit Course</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">KSOME</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="service.html">Services</a></li>
+    <li><a href="my-course.html">My Courses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="Enroll.html" class="btn-primary">Enroll Now</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="service.html">Services</a>
+  <a href="my-course.html">My Courses</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html">Login</a>
+  <a href="Enroll.html" style="color: var(--orange);">Enroll Now</a>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🎬 Professional Training</div>
+    <h1>Become a Professional<br><span>Livestreamer</span> &<br>Video Editor</h1>
+    <p>Learn industry-standard skills from KSOME. Whether you're a beginner or looking to grow — we'll help you create content that stands out.</p>
+    <div class="hero-btns">
+      <a href="Enroll.html" class="btn-primary">Start Your Journey</a>
+      <a href="about.html" class="btn-outline" style="color:#fff; border-color:rgba(255,255,255,0.4);">Learn More</a>
+    </div>
+  </section>
+
+  <!-- WHY KSOME -->
+  <section class="section">
+    <div class="section-label">Why Us</div>
+    <h2 class="section-title">Why Choose KSOME?</h2>
+    <p class="section-sub">We give you the skills, tools, and confidence to thrive in digital media — from day one.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">🤲</div>
+        <h3>Hands-On Training</h3>
+        <p>Real projects, real equipment. You learn by doing — not just watching.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🌱</div>
+        <h3>Beginner-Friendly</h3>
+        <p>No experience needed. We start from the basics and build your confidence step by step.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎓</div>
+        <h3>Certificate of Completion</h3>
+        <p>Earn a recognized certificate that validates your new professional skills.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🤝</div>
+        <h3>Ongoing Mentorship</h3>
+        <p>Our instructors support you beyond the classroom — we invest in your success long-term.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💻</div>
+        <h3>Online & Physical</h3>
+        <p>Train from anywhere. Choose the mode that works best for your lifestyle.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📡</div>
+        <h3>Industry-Standard Tools</h3>
+        <p>Learn the exact software and equipment used by professionals today.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU LEARN -->
+  <section class="section section-alt">
+    <div class="section-label">Curriculum</div>
+    <h2 class="section-title">What Our Students Learn</h2>
+    <p class="section-sub">A comprehensive curriculum built to take you from zero to professional.</p>
+
+    <div class="learn-grid">
+      <div class="learn-card"><span class="ci">🎬</span>Video Editing</div>
+      <div class="learn-card"><span class="ci">📡</span>Livestream Production</div>
+      <div class="learn-card"><span class="ci">📷</span>Camera Operation</div>
+      <div class="learn-card"><span class="ci">🎤</span>Audio Setup</div>
+      <div class="learn-card"><span class="ci">📱</span>Content Creation</div>
+      <div class="learn-card"><span class="ci">🌐</span>Social Media Video</div>
+      <div class="learn-card"><span class="ci">⛪</span>Event Broadcasting</div>
+      <div class="learn-card"><span class="ci">🎙</span>Podcast Production</div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="section">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Our Work</h2>
+    <p class="section-sub">A glimpse of what our students and team produce.</p>
+
+    <div class="gallery-grid">
+      <img src="IMAGE 1.jpg" alt="KSOME work sample 1" loading="lazy">
+      <img src="IMAGE 2.jpg" alt="KSOME work sample 2" loading="lazy">
+      <img src="IMAGE 3.jpg" alt="KSOME work sample 3" loading="lazy">
+      <img src="IMAGE 4.jpg" alt="KSOME work sample 4" loading="lazy">
+      <img src="IMAGE 5.jpg" alt="KSOME work sample 5" loading="lazy">
+      <img src="IMAGE 6.jpg" alt="KSOME work sample 6" loading="lazy">
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section section-alt">
+    <div class="section-label">Testimonials</div>
+    <h2 class="section-title">What Our Students Say</h2>
+    <p class="section-sub">Real results from real students who chose KSOME.</p>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>KSOME helped me learn professional video editing from scratch. The trainers were patient and the hands-on approach made all the difference.</p>
+        <div class="author">— KSOME Graduate</div>
+      </div>
+      <div class="testimonial-card">
+        <p>The livestreaming training gave me the confidence to handle live church events. I now run our weekly broadcasts solo.</p>
+        <div class="author">— Church Media Officer</div>
+      </div>
+      <div class="testimonial-card">
+        <p>I started with zero knowledge. After the course, I launched my own content creation business. KSOME truly changed my life.</p>
+        <div class="author">— Content Creator</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <h2>Ready to Start Your Journey?</h2>
+    <p>Join KSOME Livestreaming & Video Edit Course and gain the skills to create professional content and build a career you love.</p>
+    <a href="Enroll.html" class="btn-white">Enroll Now — It's Free to Apply</a>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">KSOME</div>
+      <p>Empowering individuals with practical digital media skills. Learn. Create. Broadcast. Succeed.</p>
+      <div class="footer-social">
+        <a href="https://www.fb.com/l/6lp1kJRRR" target="_blank" title="Facebook">f</a>
+        <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invites&utm_medium=copy_link&utm_content=lmtj301" target="_blank" title="Instagram">ig</a>
+        <a href="https://www.youtube.com/@TNVImpactTV" target="_blank" title="YouTube">yt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="my-course.html">My Courses</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Started</h4>
+      <ul>
+        <li><a href="Enroll.html">Enroll Now</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="signup.html">Sign Up</a></li>
+        <li><a href="mailto:ksome.cl@gmail.com">Email Us</a></li>
+        <li><a href="tel:07076026204">Call Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 KSOME Companies Limited. All rights reserved.</span>
+    <span>Designed by <a href="about.html">Isaac Kayode Oladipo</a></span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
