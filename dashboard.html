@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard – KSOME</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .dash-section { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.75rem; margin-bottom: 1.5rem; }
+    .dash-section h2 { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.05rem; color:var(--dark); margin-bottom:1.1rem; border-bottom:2px solid var(--gray); padding-bottom:0.75rem; }
+    .list-item { display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; padding:14px; border-radius:8px; background:#f9f9f9; margin-bottom:10px; }
+    .list-item h4 { font-size:15px; color:#222; margin-bottom:4px; }
+    .list-item p { font-size:12.5px; color:#888; }
+    .list-item .actions { display:flex; gap:8px; align-items:center; flex-shrink:0; }
+    .type-badge { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:bold; white-space:nowrap; }
+    .type-pdf    { background:#fff3e0; color:#e65c00; }
+    .type-exam   { background:#e3f2fd; color:#1565c0; }
+    .type-test   { background:#f3e5f5; color:#6a1b9a; }
+    .type-cert   { background:#e8f5e9; color:#2e7d32; }
+    .open-btn, .dl-btn {
+      display:inline-block; text-decoration:none; font-size:13px; font-weight:700;
+      padding:7px 16px; border-radius:6px; background:var(--orange); color:#fff;
+      white-space:nowrap;
+    }
+    .dl-btn { background:var(--dark); }
+    .open-btn:hover, .dl-btn:hover { opacity:0.85; }
+    .no-data { color:#888; font-size:14px; padding:16px 0; text-align:center; }
+    .mini-table { width:100%; border-collapse:collapse; font-size:13.5px; }
+    .mini-table th { background:#f0f0f0; padding:10px; text-align:left; color:#555; font-size:12.5px; }
+    .mini-table td { padding:10px; border-bottom:1px solid #f0f0f0; color:#333; }
+
+    .profile-header { display:flex; align-items:center; gap:1.25rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+    .avatar-wrap { position:relative; width:84px; height:84px; flex-shrink:0; }
+    .avatar-img {
+      width:84px; height:84px; border-radius:50%; object-fit:cover;
+      background:#eee; border:3px solid var(--white); box-shadow: var(--shadow);
+      display:flex; align-items:center; justify-content:center; font-size:2rem; color:#bbb;
+    }
+    .avatar-edit-btn {
+      position:absolute; bottom:-2px; right:-2px; width:28px; height:28px; border-radius:50%;
+      background:var(--orange); color:#fff; border:2px solid #fff; cursor:pointer;
+      font-size:13px; display:flex; align-items:center; justify-content:center;
+    }
+    .avatar-edit-btn:hover { background:var(--orange-dark); }
+    #avatarUploadMsg { font-size:12.5px; margin-top:4px; }
+
+    .outline-week { border-left:3px solid var(--orange); padding:0.6rem 0 0.6rem 1rem; margin-bottom:0.9rem; }
+    .outline-week h4 { font-size:14.5px; color:var(--dark); margin-bottom:2px; }
+    .outline-week p { font-size:13px; color:var(--muted); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">KSOME</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+    <li><a href="my-course.html">Courses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-outline" onclick="logoutStudent()">Logout</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="my-course.html">Courses</a>
+  <a href="contact.html">Contact</a>
+  <a href="#" onclick="logoutStudent()">Logout</a>
+</div>
+
+<div class="page admin-page" style="padding-top: 6rem;">
+
+  <div id="loadingState" style="text-align:center; padding: 4rem 0;">
+    <p style="color: var(--muted); font-size: 1rem;">⏳ Loading your dashboard...</p>
+  </div>
+
+  <div id="noEnrollment" style="display:none; text-align:center; padding: 4rem 1rem; max-width: 520px; margin: 0 auto;">
+    <h2 style="font-family:'Montserrat',sans-serif; color: var(--dark); margin-bottom: 1rem;">No Enrollment Found</h2>
+    <p style="color: var(--muted); margin-bottom: 1.5rem;">
+      We couldn't find an enrollment linked to <strong id="noEnrollEmail"></strong>. Make sure you enrolled using
+      the same email address you just logged in with, or enroll now to get started.
+    </p>
+    <a href="Enroll.html" class="btn-primary">Enroll Now</a>
+  </div>
+
+  <div id="dashboardContent" style="display:none;">
+
+    <div class="admin-header">
+      <div class="profile-header">
+        <div class="avatar-wrap">
+          <div class="avatar-img" id="avatarImg">🙂</div>
+          <button class="avatar-edit-btn" onclick="document.getElementById('avatarInput').click()" title="Change photo">✎</button>
+          <input type="file" id="avatarInput" accept="image/*" style="display:none">
+        </div>
+        <div>
+          <h1 id="greeting" style="margin-bottom:0.2rem;">Welcome back!</h1>
+          <p id="avatarUploadMsg" style="color:var(--muted);">Click the pencil to add or update your profile photo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="num" id="courseLabel">—</div>
+        <div class="label">Enrolled Course</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="modeLabel">—</div>
+        <div class="label">Training Mode</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="paymentStatus">—</div>
+        <div class="label">Payment Status</div>
+      </div>
+    </div>
+    <div class="admin-table-box" style="padding: 2rem; margin-bottom: 1.5rem;">
+      <h2 style="border:none; padding:0; margin-bottom: 1.25rem;">My Enrollment Details</h2>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+        <div>
+          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Full Name</div>
+          <div id="dName" style="font-weight: 600; color: var(--dark);">—</div>
+        </div>
+        <div>
+          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Email</div>
+          <div id="dEmail" style="font-weight: 600; color: var(--dark);">—</div>
+        </div>
+        <div>
+          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Phone</div>
+          <div id="dPhone" style="font-weight: 600; color: var(--dark);">—</div>
+        </div>
+        <div>
+          <div style="color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem;">Enrolled On</div>
+          <div id="dDate" style="font-weight: 600; color: var(--dark);">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="unpaidNotice" style="display:none; background: #fff3e0; border-left: 4px solid var(--orange); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;">
+      <h3 style="font-family:'Montserrat',sans-serif; color: var(--dark); margin-bottom: 0.5rem; font-size: 1rem;">⚠️ Payment Pending</h3>
+      <p style="color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem;">Your enrollment is saved, but payment hasn't been confirmed yet. Complete payment to unlock full course access.</p>
+      <a href="payment.html" class="btn-primary">Complete Payment</a>
+    </div>
+
+    <div id="paidContent" style="display:none;">
+      <div class="admin-table-box" style="padding: 2rem; margin-bottom: 1.5rem;">
+        <h2 style="border:none; padding:0; margin-bottom: 1rem;">🎉 Welcome to Your Course</h2>
+        <p style="color: var(--muted); line-height: 1.7;">
+          Your payment has been confirmed and you're officially enrolled! Any notes, tests, exams, results
+          or certificates your instructor uploads will appear below automatically.
+        </p>
+      </div>
+    </div>
+
+    <!-- COURSE OUTLINE -->
+    <div class="dash-section">
+      <h2>📖 Course Outline</h2>
+      <div id="outlineList"></div>
+    </div>
+
+    <!-- NOTES / MATERIALS -->
+    <div class="dash-section">
+      <h2>📚 My Notes &amp; Materials</h2>
+      <p id="loadingMaterials" class="no-data">Loading...</p>
+      <div id="materialsList"></div>
+    </div>
+
+    <!-- EXAMS / TESTS -->
+    <div class="dash-section">
+      <h2>📝 My Exams &amp; Tests</h2>
+      <p id="loadingExams" class="no-data">Loading...</p>
+      <div id="examsList"></div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="dash-section">
+      <h2>🏆 My Results</h2>
+      <p id="loadingResults" class="no-data">Loading...</p>
+      <div id="resultsList" style="overflow-x:auto;"></div>
+    </div>
+
+    <!-- CERTIFICATES -->
+    <div class="dash-section">
+      <h2>🎓 My Certificates</h2>
+      <p id="loadingCerts" class="no-data">Loading...</p>
+      <div id="certsList"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import {
+    getFirestore, collection, query, where, onSnapshot, doc, setDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import {
+    getStorage, ref, uploadBytes, getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
+    authDomain: "ksome-website.firebaseapp.com",
+    projectId: "ksome-website",
+    storageBucket: "ksome-website.appspot.com",
+    messagingSenderId: "970299265208",
+    appId: "1:970299265208:web:870e4de77e51e9032e644d"
+  };
+
+  const app     = initializeApp(firebaseConfig);
+  const auth    = getAuth(app);
+  const db      = getFirestore(app);
+  const storage = getStorage(app);
+
+  // Sample syllabus per course — edit this to match your real curriculum.
+  const COURSE_OUTLINES = {
+    "Video Editing": [
+      { title: "Week 1 — Editing Fundamentals", desc: "Interface, cuts, timelines, and organizing footage." },
+      { title: "Week 2 — Transitions & Color", desc: "Transitions, color correction, and color grading basics." },
+      { title: "Week 3 — Audio & Motion Graphics", desc: "Sound mixing, titles, and simple motion graphics." },
+      { title: "Week 4 — Export & Final Project", desc: "Export settings for web/social, and a graded final edit." }
+    ],
+    "Livestreaming": [
+      { title: "Week 1 — Livestream Foundations", desc: "Streaming platforms, encoders, and basic setup." },
+      { title: "Week 2 — Camera & Switching", desc: "Multi-camera routing and live switching." },
+      { title: "Week 3 — Audio for Live Events", desc: "Mixing live audio and troubleshooting common issues." },
+      { title: "Week 4 — Live Production Day", desc: "Run a full mock live broadcast end-to-end." }
+    ],
+    "Podcast Production": [
+      { title: "Week 1 — Recording Basics", desc: "Mic technique, room setup, and recording software." },
+      { title: "Week 2 — Editing & Mixing", desc: "Cleaning audio, pacing, and mixing multi-track episodes." },
+      { title: "Week 3 — Publishing & Growth", desc: "Show structure, hosting platforms, and promotion." }
+    ],
+    "JET Club Training": [
+      { title: "Module 1 — Orientation & Fundamentals", desc: "Program overview, tools, and core skills refresher." },
+      { title: "Module 2 — Hands-On Practice", desc: "Guided practical sessions with instructor feedback." },
+      { title: "Module 3 — Team Project", desc: "Apply skills on a group production project." },
+      { title: "Module 4 — Review & Certification", desc: "Final review, assessment, and certification." }
+    ],
+    "Complete Package": [
+      { title: "Phase 1 — Video Editing", desc: "See Video Editing outline above." },
+      { title: "Phase 2 — Livestream Production", desc: "See Livestreaming outline above." },
+      { title: "Phase 3 — Podcast Production", desc: "See Podcast Production outline above." },
+      { title: "Phase 4 — Capstone Project", desc: "Combine all skills into one final production." }
+    ]
+  };
+
+  const loading      = document.getElementById("loadingState");
+  const noEnrollment = document.getElementById("noEnrollment");
+  const content       = document.getElementById("dashboardContent");
+
+  let unsubEnrollments = null, unsubMaterials = null, unsubExams = null, unsubResults = null, unsubCerts = null;
+
+  // ── Require login ─────────────────────────────────────────
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Not logged in — send them to login, then back here after.
+      window.location = "login.html";
+      return;
+    }
+    startDashboard(user);
+  });
+
+  function stopAllListeners() {
+    [unsubEnrollments, unsubMaterials, unsubExams, unsubResults, unsubCerts].forEach(u => { if (u) u(); });
+  }
+
+  function startDashboard(user) {
+    const email = (user.email || "").toLowerCase();
+    document.getElementById("noEnrollEmail").textContent = user.email || "your account";
+
+    // Live-listen to this student's enrollment(s) by email
+    const enrollQ = query(collection(db, "enrollments"), where("email", "==", user.email));
+
+    unsubEnrollments = onSnapshot(enrollQ, (snap) => {
+      loading.style.display = "none";
+
+      if (snap.empty) {
+        noEnrollment.style.display = "block";
+        content.style.display = "none";
+        return;
+      }
+
+      noEnrollment.style.display = "none";
+      content.style.display = "block";
+
+      // Pick the most recently enrolled record as the "primary" profile
+      const enrollments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      enrollments.sort((a, b) => new Date(b.enrolledAt || 0) - new Date(a.enrolledAt || 0));
+      const primary = enrollments[0];
+
+      document.getElementById("greeting").textContent   = `Welcome back, ${primary.fullName || "Student"}!`;
+      document.getElementById("dName").textContent       = primary.fullName || "—";
+      document.getElementById("dEmail").textContent      = primary.email || "—";
+      document.getElementById("dPhone").textContent      = primary.phone || "—";
+      document.getElementById("courseLabel").textContent = primary.course || "—";
+      document.getElementById("modeLabel").textContent   = primary.mode || "—";
+      renderOutline(primary.course);
+
+      if (primary.enrolledAt) {
+        document.getElementById("dDate").textContent = new Date(primary.enrolledAt).toLocaleDateString();
+      }
+
+      const paymentStatusEl = document.getElementById("paymentStatus");
+      if (primary.paid) {
+        paymentStatusEl.textContent = "Paid ✅";
+        document.getElementById("paidContent").style.display = "block";
+        document.getElementById("unpaidNotice").style.display = "none";
+      } else {
+        paymentStatusEl.textContent = "Pending";
+        document.getElementById("unpaidNotice").style.display = "block";
+        document.getElementById("paidContent").style.display = "none";
+      }
+
+      // All courses this student has ever enrolled in (for materials/exams matching)
+      const courses = [...new Set(enrollments.map(e => e.course).filter(Boolean))].slice(0, 10);
+      watchMaterialsAndExams(courses);
+    }, (err) => {
+      console.error("Enrollment listener error:", err);
+      loading.style.display = "none";
+      noEnrollment.style.display = "block";
+    });
+
+    // Results — matched by email
+    const resultsQ = query(collection(db, "exam-results"), where("email", "==", user.email));
+    unsubResults = onSnapshot(resultsQ, (snap) => renderResults(snap), (e) => console.error(e));
+
+    // Certificates — matched by student email
+    const certsQ = query(collection(db, "certificates"), where("studentEmail", "==", user.email));
+    unsubCerts = onSnapshot(certsQ, (snap) => renderCerts(snap), (e) => console.error(e));
+
+    // Profile photo — stored keyed by the login UID
+    watchProfilePhoto(user);
+  }
+
+  function watchProfilePhoto(user) {
+    const profileRef = doc(db, "students", user.uid);
+    onSnapshot(profileRef, (snap) => {
+      const avatar = document.getElementById("avatarImg");
+      const photoURL = snap.exists() ? snap.data().photoURL : null;
+      if (photoURL) {
+        avatar.style.backgroundImage = `url('${photoURL}')`;
+        avatar.style.backgroundSize = "cover";
+        avatar.style.backgroundPosition = "center";
+        avatar.textContent = "";
+      } else {
+        avatar.style.backgroundImage = "";
+        avatar.textContent = "🙂";
+      }
+    });
+
+    document.getElementById("avatarInput").addEventListener("change", async (e) => {
+      const file = e.target.files[0];
+      const msg = document.getElementById("avatarUploadMsg");
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        msg.style.color = "red"; msg.textContent = "❌ Please choose an image file."; return;
+      }
+      if (file.size > 3 * 1024 * 1024) {
+        msg.style.color = "red"; msg.textContent = "❌ Image must be under 3MB."; return;
+      }
+
+      msg.style.color = "#ff7200"; msg.textContent = "⏳ Uploading photo...";
+
+      try {
+        const photoRef = ref(storage, `profile-photos/${user.uid}`);
+        await uploadBytes(photoRef, file);
+        const photoURL = await getDownloadURL(photoRef);
+        await setDoc(doc(db, "students", user.uid), {
+          email: user.email,
+          photoURL,
+          updatedAt: new Date().toISOString()
+        }, { merge: true });
+        msg.style.color = "green"; msg.textContent = "✅ Profile photo updated!";
+      } catch (error) {
+        console.error("Photo upload error:", error);
+        msg.style.color = "red"; msg.textContent = "❌ Upload failed: " + error.message;
+      }
+    });
+  }
+
+  function renderOutline(course) {
+    const box = document.getElementById("outlineList");
+    const weeks = COURSE_OUTLINES[course];
+    if (!weeks) {
+      box.innerHTML = "<p class='no-data'>No outline available for this course yet. Contact your instructor for the syllabus.</p>";
+      return;
+    }
+    box.innerHTML = weeks.map(w => `
+      <div class="outline-week">
+        <h4>${escapeHtml(w.title)}</h4>
+        <p>${escapeHtml(w.desc)}</p>
+      </div>`).join("");
+  }
+
+  function watchMaterialsAndExams(courses) {
+    if (unsubMaterials) unsubMaterials();
+    if (unsubExams) unsubExams();
+
+    if (!courses.length) {
+      renderMaterials({ empty: true, docs: [] });
+      renderExams({ empty: true, docs: [] });
+      return;
+    }
+
+    const materialsQ = query(collection(db, "course-materials"), where("course", "in", courses));
+    unsubMaterials = onSnapshot(materialsQ, (snap) => renderMaterials(snap), (e) => console.error(e));
+
+    const examsQ = query(collection(db, "exams-tests"), where("course", "in", courses));
+    unsubExams = onSnapshot(examsQ, (snap) => renderExams(snap), (e) => console.error(e));
+  }
+
+  function renderMaterials(snap) {
+    document.getElementById("loadingMaterials").style.display = "none";
+    const box = document.getElementById("materialsList");
+    if (snap.empty) { box.innerHTML = "<p class='no-data'>No notes or materials uploaded for your course yet.</p>"; return; }
+    let html = "";
+    snap.docs.forEach(docSnap => {
+      const d = docSnap.data();
+      const link = d.downloadURL || d.driveLink || "#";
+      html += `
+        <div class="list-item">
+          <div>
+            <h4>📄 ${escapeHtml(d.title || "Untitled")}</h4>
+            <p>${escapeHtml(d.course || "")}</p>
+          </div>
+          <div class="actions">
+            <span class="type-badge type-pdf">NOTE</span>
+            <a class="open-btn" href="${link}" target="_blank" rel="noopener">Open / Download</a>
+          </div>
+        </div>`;
+    });
+    box.innerHTML = html;
+  }
+
+  function renderExams(snap) {
+    document.getElementById("loadingExams").style.display = "none";
+    const box = document.getElementById("examsList");
+    if (snap.empty) { box.innerHTML = "<p class='no-data'>No exams or tests posted for your course yet.</p>"; return; }
+    let html = "";
+    snap.docs.forEach(docSnap => {
+      const d = docSnap.data();
+      const link = d.downloadURL || d.driveLink;
+      html += `
+        <div class="list-item">
+          <div>
+            <h4>${d.type === "exam" ? "📋" : "📝"} ${escapeHtml(d.title || "Untitled")}</h4>
+            <p>${escapeHtml(d.course || "")} • ${escapeHtml(d.duration || "No duration set")}${d.instructions ? " — " + escapeHtml(d.instructions) : ""}</p>
+          </div>
+          <div class="actions">
+            <span class="type-badge type-${d.type === "exam" ? "exam" : "test"}">${(d.type || "test").toUpperCase()}</span>
+            ${link ? `<a class="open-btn" href="${link}" target="_blank" rel="noopener">Open</a>` : ""}
+          </div>
+        </div>`;
+    });
+    box.innerHTML = html;
+  }
+
+  function renderResults(snap) {
+    document.getElementById("loadingResults").style.display = "none";
+    const box = document.getElementById("resultsList");
+    if (snap.empty) { box.innerHTML = "<p class='no-data'>No results posted yet.</p>"; return; }
+    const rows = snap.docs.map(d => {
+      const r = d.data();
+      return `<tr>
+        <td>${escapeHtml(r.examTitle || "—")}</td>
+        <td>${escapeHtml(r.course || "—")}</td>
+        <td>${escapeHtml(r.score || "—")}</td>
+        <td><strong>${escapeHtml(r.grade || "—")}</strong></td>
+      </tr>`;
+    }).join("");
+    box.innerHTML = `
+      <table class="mini-table">
+        <thead><tr><th>Exam / Test</th><th>Course</th><th>Score</th><th>Grade</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function renderCerts(snap) {
+    document.getElementById("loadingCerts").style.display = "none";
+    const box = document.getElementById("certsList");
+    if (snap.empty) { box.innerHTML = "<p class='no-data'>No certificates issued yet. They'll appear here as soon as you complete your program.</p>"; return; }
+    let html = "";
+    snap.docs.forEach(docSnap => {
+      const d = docSnap.data();
+      const link = d.downloadURL || d.driveLink || "#";
+      html += `
+        <div class="list-item">
+          <div>
+            <h4>🎓 ${escapeHtml(d.title || "Certificate of Completion")}</h4>
+            <p>${escapeHtml(d.course || "")}${d.issuedAt ? " • Issued " + new Date(d.issuedAt).toLocaleDateString() : ""}</p>
+          </div>
+          <div class="actions">
+            <span class="type-badge type-cert">CERTIFICATE</span>
+            <a class="dl-btn" href="${link}" target="_blank" rel="noopener" download>Download</a>
+          </div>
+        </div>`;
+    });
+    box.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, s => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[s]));
+  }
+
+  window.logoutStudent = function () {
+    stopAllListeners();
+    signOut(auth).finally(() => {
+      localStorage.removeItem("ksome_enrollment_id");
+      localStorage.removeItem("ksome_student_email");
+      localStorage.removeItem("ksome_student_name");
+      window.location = "index.html";
+    });
+  };
+</script>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
