@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Us – KSOME</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">KSOME</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="service.html">Services</a></li>
+    <li><a href="my-course.html">My Courses</a></li>
+    <li><a href="booking.html" class="active">Book Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="login.html" class="btn-outline">Login</a>
+    <a href="Enroll.html" class="btn-primary">Enroll Now</a>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="service.html">Services</a>
+  <a href="my-course.html">My Courses</a>
+  <a href="booking.html">Book Us</a>
+  <a href="contact.html">Contact</a>
+  <a href="login.html">Login</a>
+  <a href="Enroll.html" style="color: var(--orange);">Enroll Now</a>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="section-label" style="text-align:center; margin-bottom:1rem; color:var(--orange);">Book KSOME</div>
+    <h1>Book Us For Your Event</h1>
+    <p>Professional livestreaming, video editing, and media production for any occasion. Fill the form below and we'll get back to you within 24 hours.</p>
+  </div>
+
+  <!-- SERVICE CARDS -->
+  <section class="section section-alt">
+    <div class="section-label">What We Cover</div>
+    <h2 class="section-title">Events We Handle</h2>
+    <p class="section-sub">From intimate gatherings to large-scale productions — KSOME delivers quality every time.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">⛪</div>
+        <h3>Church Livestreaming</h3>
+        <p>Professional broadcast of services, programs, and special events to your online congregation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎙</div>
+        <h3>Podcast Production</h3>
+        <p>Full podcast setup, recording, editing, and publishing for individuals and organizations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎂</div>
+        <h3>Birthday Celebrations</h3>
+        <p>Livestream and video coverage of birthday parties — from intimate to grand celebrations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎤</div>
+        <h3>Concerts & Shows</h3>
+        <p>Multi-camera live production for music concerts, comedy shows, and stage performances.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎓</div>
+        <h3>Conferences & Seminars</h3>
+        <p>Live broadcast and recording of corporate events, conferences, workshops, and seminars.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💍</div>
+        <h3>Weddings & Ceremonies</h3>
+        <p>Capture every moment of your special day with professional livestreaming and video coverage.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🏛</div>
+        <h3>Political & Public Events</h3>
+        <p>Professional media coverage for political rallies, town halls, and public ceremonies.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🎬</div>
+        <h3>Video Editing Services</h3>
+        <p>Post-production editing for any existing footage — highlight reels, promos, and full edits.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING FORM -->
+  <section class="section">
+    <div class="section-label">Book Now</div>
+    <h2 class="section-title">Submit Your Booking Request</h2>
+    <p class="section-sub">Fill in the details below. We'll review your request and contact you within 24 hours to confirm.</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 4rem; align-items: start;">
+
+      <!-- LEFT INFO -->
+      <div>
+        <div class="feature-card" style="margin-bottom: 1.25rem;">
+          <div class="icon">📞</div>
+          <h3>Call Us Directly</h3>
+          <p><a href="tel:07076026204" style="color: var(--orange); text-decoration:none;">07076026204</a></p>
+        </div>
+        <div class="feature-card" style="margin-bottom: 1.25rem;">
+          <div class="icon">✉️</div>
+          <h3>Email Us</h3>
+          <p><a href="mailto:ksome.cl@gmail.com" style="color: var(--orange); text-decoration:none;">ksome.cl@gmail.com</a></p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">💬</div>
+          <h3>WhatsApp Group</h3>
+          <p><a href="https://chat.whatsapp.com/JNgNHs6fLrA5HYrGre7hBh?s=cl&p=a&mlu=0&amv=3" target="_blank" style="color: var(--orange); text-decoration:none;">Join our community</a></p>
+        </div>
+      </div>
+
+      <!-- BOOKING FORM BOX -->
+      <div class="enroll-form-box">
+        <h3>Booking Request Form</h3>
+        <p id="bookingMsg" style="font-weight:700; margin-bottom:0.75rem;"></p>
+
+        <div class="form-group">
+          <label class="dark">Full Name *</label>
+          <input type="text" id="bName" class="light" placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label class="dark">Phone Number *</label>
+          <input type="tel" id="bPhone" class="light" placeholder="e.g. 07076026204">
+        </div>
+        <div class="form-group">
+          <label class="dark">Email Address *</label>
+          <input type="email" id="bEmail" class="light" placeholder="Your email address">
+        </div>
+        <div class="form-group">
+          <label class="dark">Event Type *</label>
+          <select id="bEventType" class="light">
+            <option value="">Select event type</option>
+            <option>Church Livestreaming</option>
+            <option>Podcast Production</option>
+            <option>Birthday Celebration</option>
+            <option>Concert / Show</option>
+            <option>Conference / Seminar</option>
+            <option>Wedding / Ceremony</option>
+            <option>Political / Public Event</option>
+            <option>Video Editing Only</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="dark">Service Needed *</label>
+          <select id="bService" class="light">
+            <option value="">Select service</option>
+            <option>Livestreaming Only</option>
+            <option>Video Editing Only</option>
+            <option>Livestreaming + Video Editing</option>
+            <option>Full Production (Camera, Audio, Livestream, Edit)</option>
+            <option>Podcast Recording & Editing</option>
+            <option>Not sure — need advice</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="dark">Event Date *</label>
+          <input type="date" id="bDate" class="light">
+        </div>
+        <div class="form-group">
+          <label class="dark">Event Location *</label>
+          <input type="text" id="bLocation" class="light" placeholder="City, venue or online">
+        </div>
+        <div class="form-group">
+          <label class="dark">Expected Audience Size</label>
+          <select id="bAudience" class="light">
+            <option value="">Select range</option>
+            <option>Under 50</option>
+            <option>50 – 200</option>
+            <option>200 – 500</option>
+            <option>500 – 1000</option>
+            <option>Over 1000</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="dark">Additional Details</label>
+          <textarea id="bDetails" class="light" rows="4" placeholder="Tell us more about your event — theme, special requirements, platforms to stream to, etc."></textarea>
+        </div>
+
+        <button class="btn-primary" style="width:100%; padding:0.85rem; font-size:1rem;" onclick="submitBooking()">
+          Submit Booking Request
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <h2>Not Sure What You Need?</h2>
+    <p>Call or WhatsApp us and we'll help you figure out the best service for your event.</p>
+    <a href="tel:07076026204" class="btn-white">Call Us Now</a>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">KSOME</div>
+      <p>Empowering individuals with practical digital media skills. Learn. Create. Broadcast. Succeed.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Services</a></li>
+        <li><a href="booking.html">Book Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Get Started</h4>
+      <ul>
+        <li><a href="Enroll.html">Enroll Now</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="mailto:ksome.cl@gmail.com">Email Us</a></li>
+        <li><a href="tel:07076026204">Call Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 KSOME Companies Limited. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
+    authDomain: "ksome-website.firebaseapp.com",
+    projectId: "ksome-website",
+    storageBucket: "ksome-website.appspot.com",
+    messagingSenderId: "970299265208",
+    appId: "1:970299265208:web:870e4de77e51e9032e644d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  window.submitBooking = async function () {
+    const name      = document.getElementById("bName").value.trim();
+    const phone     = document.getElementById("bPhone").value.trim();
+    const email     = document.getElementById("bEmail").value.trim();
+    const eventType = document.getElementById("bEventType").value;
+    const service   = document.getElementById("bService").value;
+    const date      = document.getElementById("bDate").value;
+    const location  = document.getElementById("bLocation").value.trim();
+    const audience  = document.getElementById("bAudience").value;
+    const details   = document.getElementById("bDetails").value.trim();
+    const msg       = document.getElementById("bookingMsg");
+    const btn       = document.querySelector("button[onclick='submitBooking()']");
+
+    if (!name || !phone || !email || !eventType || !service || !date || !location) {
+      msg.style.color = "red";
+      msg.textContent = "❌ Please fill in all required fields.";
+      return;
+    }
+
+    if (!navigator.onLine) {
+      msg.style.color = "red";
+      msg.textContent = "❌ No internet connection. Please check your connection and try again.";
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = "Submitting...";
+    msg.style.color = "orange";
+    msg.textContent = "⏳ Saving your booking request...";
+
+    try {
+      // Save to Firebase
+      await addDoc(collection(db, "bookings"), {
+        name, phone, email, eventType, service,
+        date, location, audience, details,
+        status: "pending",
+        bookedAt: new Date().toISOString()
+      });
+
+      // Send email via mailto as notification
+      const subject = encodeURIComponent(`New Booking Request: ${eventType} – ${name}`);
+      const body = encodeURIComponent(
+        `New booking request received!\n\n` +
+        `Name: ${name}\n` +
+        `Phone: ${phone}\n` +
+        `Email: ${email}\n` +
+        `Event Type: ${eventType}\n` +
+        `Service Needed: ${service}\n` +
+        `Event Date: ${date}\n` +
+        `Location: ${location}\n` +
+        `Expected Audience: ${audience}\n` +
+        `Additional Details: ${details}\n\n` +
+        `Submitted: ${new Date().toLocaleString()}`
+      );
+
+      // Open email notification in background
+      const emailLink = document.createElement("a");
+      emailLink.href = `mailto:ksome.cl@gmail.com?subject=${subject}&body=${body}`;
+      emailLink.style.display = "none";
+      document.body.appendChild(emailLink);
+      emailLink.click();
+      document.body.removeChild(emailLink);
+
+      msg.style.color = "green";
+      msg.textContent = "✅ Booking request submitted! We'll contact you within 24 hours.";
+
+      // Clear form
+      ["bName","bPhone","bEmail","bDetails","bDate","bLocation"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      ["bEventType","bService","bAudience"].forEach(id => {
+        document.getElementById(id).selectedIndex = 0;
+      });
+
+      btn.disabled    = false;
+      btn.textContent = "Submit Booking Request";
+
+    } catch (error) {
+      console.error("Booking error:", error);
+      msg.style.color = "red";
+
+      if (!navigator.onLine || error.code === "unavailable") {
+        msg.textContent = "❌ No internet connection. Please try again.";
+      } else if (error.code === "permission-denied") {
+        msg.textContent = "❌ Permission denied. Please check Firebase rules.";
+      } else {
+        msg.textContent = "❌ Error: " + error.message;
+      }
+
+      btn.disabled    = false;
+      btn.textContent = "Submit Booking Request";
+    }
+  };
+</script>
+
+</body>
+</html>
