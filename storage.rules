@@ -1,0 +1,16 @@
+rules_version = '2';
+
+// Copy this into Firebase Console → Storage → Rules → Publish.
+// Lets any student read profile photos (needed to display them), but a
+// student can only upload/overwrite their OWN photo — not anyone else's.
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /profile-photos/{uid} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == uid
+                   && request.resource.size < 3 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+  }
+}
