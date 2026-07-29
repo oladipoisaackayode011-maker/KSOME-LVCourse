@@ -201,12 +201,35 @@
     <span>Designed by <a href="about.html">Isaac Kayode Oladipo</a></span>
   </div>
 </footer>
-
 <script>
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
 }
 </script>
+
+<!-- KSOME AI Floating Button -->
+<button id="ksome-ai-btn">🤖 Ask KSOME AI</button>
+
+<!-- AI Chat Box -->
+<div id="ksome-ai-chat" class="hidden">
+  <div class="ai-header">
+    <span>🤖 KSOME AI</span>
+    <button id="close-ai">✖</button>
+  </div>
+
+  <div id="ai-messages">
+    <div class="ai-message">
+      👋 Hello! I'm KSOME AI. How can I help you today?
+    </div>
+  </div>
+
+  <div class="ai-input">
+    <input type="text" id="user-message" placeholder="Ask KSOME AI...">
+    <button id="send-ai">Send</button>
+  </div>
+</div>
+
+<script src="js/ai-chat.js"></script>
 
 </body>
 </html>
