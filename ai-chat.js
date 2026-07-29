@@ -20,7 +20,7 @@ const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
  
 const ai = getAI(app, { backend: new GoogleAIBackend() });
 const model = getGenerativeModel(ai, {
-  model: "gemini-2.5-flash",
+  model: "gemini-3.6-flash",
   systemInstruction:
     "You are KSOME AI, a friendly assistant for the KSOME Livestreaming & Video Edit Course website. " +
     "Answer questions about the courses, services, booking, and enrollment. Keep replies short and helpful."
