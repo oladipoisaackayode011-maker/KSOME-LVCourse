@@ -1150,3 +1150,146 @@ footer {
   .hero-btns { flex-direction: column; }
   .admin-table { font-size: 0.78rem; }
 }
+  #ksome-ai-chat {
+    width: 90vw;
+    right: 5vw;
+    height: 65vh;
+    bottom: 80px;
+  }
+}
+
+/* ===== KSOME AI WIDGET ===== */
+#ksome-ai-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  padding: 0.85rem 1.4rem;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(255,114,0,0.35);
+  z-index: 1200;
+  transition: background var(--transition), transform var(--transition);
+}
+
+#ksome-ai-btn:hover {
+  background: var(--orange-dark);
+  transform: translateY(-2px);
+}
+
+#ksome-ai-chat {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 350px;
+  height: 480px;
+  background: var(--dark);
+  border: 1px solid rgba(255,114,0,0.3);
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1200;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.ai-header {
+  background: var(--orange);
+  color: var(--white);
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.ai-header button {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+#ai-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ai-message {
+  background: rgba(255,255,255,0.07);
+  color: var(--white);
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: 85%;
+}
+
+.ai-message.user {
+  background: var(--orange);
+  align-self: flex-end;
+  text-align: right;
+}
+
+.ai-input {
+  display: flex;
+  padding: 0.75rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  gap: 0.5rem;
+}
+
+.ai-input input {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.07);
+  color: var(--white);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.88rem;
+}
+
+.ai-input input:focus {
+  outline: none;
+  border-color: var(--orange);
+}
+
+.ai-input input::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+.ai-input button {
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: background var(--transition);
+}
+
+.ai-input button:hover {
+  background: var(--orange-dark);
+}
+
