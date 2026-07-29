@@ -7,7 +7,7 @@ import { getAI, getGenerativeModel, GoogleAIBackend } from "https://www.gstatic.
  
 // Reuse the same config as auth.js. Keep this in sync if it ever changes.
 const firebaseConfig = {
-  apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
+   apiKey: "AIzaSyC1LV-g2H3yKs_6nbruF1TEbCoV34UX0jI",
   authDomain: "ksome-website.firebaseapp.com",
   projectId: "ksome-website",
   storageBucket: "ksome-website.appspot.com",
