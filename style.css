@@ -1149,7 +1149,7 @@ footer {
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   .hero-btns { flex-direction: column; }
   .admin-table { font-size: 0.78rem; }
-}
+
   #ksome-ai-chat {
     width: 90vw;
     right: 5vw;
@@ -1292,4 +1292,3 @@ footer {
 .ai-input button:hover {
   background: var(--orange-dark);
 }
-
