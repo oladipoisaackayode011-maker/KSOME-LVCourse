@@ -182,7 +182,7 @@
 <div id="adminPanel">
 
   <div class="welcome">
-    <h2>Welcome, Isaac 👋</h2>
+    <h2>Welcome, <span id="welcomeName">Admin</span> 👋</h2>
     <p>Manage your students, materials, exams, and results from here.</p>
   </div>
 
@@ -400,7 +400,25 @@
     appId: "1:970299265208:web:870e4de77e51e9032e644d"
   };
 
-  const ADMIN_EMAIL = "oladipoisaac012@gmail.com";
+  // ── Admin Allowlist ──────────────────────────────────────
+  // MAX_ADMINS caps how many entries ADMIN_EMAILS is allowed to hold.
+  // To add or remove an admin: edit the map below, then redeploy.
+  // To raise the cap later: just change MAX_ADMINS.
+  const MAX_ADMINS = 2;
+
+  const ADMIN_EMAILS = {
+    "oladipoisaac012@gmail.com": "Isaac"
+    // "oladipoisaackayode011@gmail.com": "Jeremiah studio"
+  };
+
+  if (Object.keys(ADMIN_EMAILS).length > MAX_ADMINS) {
+    console.warn(`⚠️ ADMIN_EMAILS has more entries than MAX_ADMINS (${MAX_ADMINS}). Extra admins will still be blocked from logging in — raise MAX_ADMINS to allow them.`);
+  }
+
+  function getAdminName(email) {
+    const emails = Object.keys(ADMIN_EMAILS).slice(0, MAX_ADMINS);
+    return emails.includes(email) ? ADMIN_EMAILS[email] : null;
+  }
 
   const app     = initializeApp(firebaseConfig);
   const auth    = getAuth(app);
@@ -409,14 +427,16 @@
 
   // ── Auth ─────────────────────────────────────────────────
   onAuthStateChanged(auth, (user) => {
-    if (user && user.email === ADMIN_EMAIL) {
+    const adminName = user ? getAdminName(user.email) : null;
+    if (user && adminName) {
+      document.getElementById("welcomeName").textContent = adminName;
       document.getElementById("loginSection").style.display = "none";
       document.getElementById("adminPanel").style.display   = "block";
       document.getElementById("logoutBtn").style.display    = "inline-block";
       loadAll();
     } else if (user) {
       signOut(auth);
-      document.getElementById("loginMsg").textContent = "❌ You are not an admin.";
+      document.getElementById("loginMsg").textContent = "❌ You are not an authorized admin.";
     }
   });
 
