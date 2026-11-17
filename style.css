@@ -1358,3 +1358,29 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 #ksome-ai-btn:hover { background: var(--accent-dark); }
 .ai-header { background: var(--brand); }
 .ai-message.user { background: var(--brand); }
+
+/* ===== PHONE FIXES: buttons & enroll page ===== */
+img, video { max-width: 100%; height: auto; }
+.btn-primary, .btn-outline, .btn-white {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.3;
+}
+.enroll-wrapper > *, .contact-grid > *, .footer-top > * { min-width: 0; }
+.enroll-form-box { width: 100%; }
+.btn-block { display: block; }
+
+@media (max-width: 700px) {
+  /* 16px inputs stop iPhones zooming in and cutting off the page */
+  .form-group input, .form-group select, .form-group textarea,
+  .ai-input input { font-size: 16px; }
+
+  .btn-primary, .btn-outline, .btn-white { letter-spacing: 0.5px; }
+  .hero-btns { width: 100%; }
+  .hero-btns .btn-primary, .hero-btns .btn-outline { width: 100%; }
+  .cta-banner .btn-white { width: 100%; padding: 0.85rem 1rem; }
+  .enroll-info .btn-outline { display: block; text-align: center; }
+  .enroll-form-box { padding: 1.5rem 1.25rem; }
+  footer { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); }
+}
