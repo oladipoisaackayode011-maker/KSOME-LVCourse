@@ -3,10 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KSOME – Livestreaming & Video Edit Course</title>
+  <title>KSOME Media Academy – Livestreaming & Video Editing Course</title>
+  <meta name="description" content="Learn livestreaming, video editing, camera work and podcast production at KSOME Media Academy. Beginner-friendly, hands-on training, online or physical, with a certificate.">
+  <meta property="og:title" content="KSOME Media Academy – Livestreaming & Video Editing Course">
+  <meta property="og:description" content="Learn livestreaming, video editing, camera work and podcast production at KSOME Media Academy. Beginner-friendly, hands-on training, online or physical, with a certificate.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0b1736">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2218%22 fill=%22%230b1736%22/><text x=%2250%22 y=%2272%22 font-size=%2270%22 font-weight=%22900%22 text-anchor=%22middle%22 fill=%22%23fbbf24%22 font-family=%22Arial%22>K</text></svg>">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- NAVBAR -->
 <nav class="navbar">
@@ -23,7 +33,7 @@
     <a href="login.html" class="btn-outline">Login</a>
     <a href="Enroll.html" class="btn-primary">Enroll Now</a>
   </div>
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -33,14 +43,14 @@
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
   <a href="service.html">Services</a>
-  <li><a href="booking.html">BOOK US</a></li>
+  <a href="booking.html">Book Us</a>
   <a href="my-course.html">My Courses</a>
   <a href="contact.html">Contact</a>
   <a href="login.html">Login</a>
-  <a href="Enroll.html" style="color: var(--orange);">Enroll Now</a>
+  <a href="Enroll.html" class="mobile-cta">Enroll Now</a>
 </div>
 
-<div class="page">
+<main class="page" id="main">
 
   <!-- HERO -->
   <section class="hero">
@@ -49,7 +59,7 @@
     <p>Learn industry-standard skills from KSOME. Whether you're a beginner or looking to grow — we'll help you create content that stands out.</p>
     <div class="hero-btns">
       <a href="Enroll.html" class="btn-primary">Start Your Journey</a>
-      <a href="about.html" class="btn-outline" style="color:#fff; border-color:rgba(255,255,255,0.4);">Learn More</a>
+      <a href="about.html" class="btn-outline btn-ghost">Learn More</a>
     </div>
   </section>
 
@@ -118,12 +128,12 @@
     <p class="section-sub">A glimpse of what our students and team produce.</p>
 
     <div class="gallery-grid">
-      <img src="IMAGE 1.jpg" alt="KSOME work sample 1" loading="lazy">
-      <img src="IMAGE 2.jpg" alt="KSOME work sample 2" loading="lazy">
-      <img src="IMAGE 3.jpg" alt="KSOME work sample 3" loading="lazy">
-      <img src="IMAGE 4.jpg" alt="KSOME work sample 4" loading="lazy">
-      <img src="IMAGE 5.jpg" alt="KSOME work sample 5" loading="lazy">
-      <img src="IMAGE 6.jpg" alt="KSOME work sample 6" loading="lazy">
+      <img decoding="async" src="IMAGE 1.jpg" alt="KSOME work sample 1" loading="lazy">
+      <img decoding="async" src="IMAGE 2.jpg" alt="KSOME work sample 2" loading="lazy">
+      <img decoding="async" src="IMAGE 3.jpg" alt="KSOME work sample 3" loading="lazy">
+      <img decoding="async" src="IMAGE 4.jpg" alt="KSOME work sample 4" loading="lazy">
+      <img decoding="async" src="IMAGE 5.jpg" alt="KSOME work sample 5" loading="lazy">
+      <img decoding="async" src="IMAGE 6.jpg" alt="KSOME work sample 6" loading="lazy">
     </div>
   </section>
 
@@ -156,7 +166,7 @@
     <a href="Enroll.html" class="btn-white">Enroll Now — It's Free to Apply</a>
   </section>
 
-</div>
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -165,10 +175,10 @@
       <div class="logo">KSOME</div>
       <p>Empowering individuals with practical digital media skills. Learn. Create. Broadcast. Succeed.</p>
       <div class="footer-social">
-        <a href="https://www.fb.com/l/6lp1kJRRR" target="_blank" title="Facebook">f</a>
-        <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invites&utm_medium=copy_link&utm_content=lmtj301" target="_blank" title="Instagram">ig</a>
-        <a href="https://www.youtube.com/@TNVImpactTV" target="_blank" title="YouTube">yt</a>
-        <a href="https://chat.whatsapp.com/JNgNHs6fLrA5HYrGre7hBh?s=cl&p=a&mlu=0&amv=3" target="_blank" title="WhatsApp">wa</a>
+        <a href="https://www.fb.com/l/6lp1kJRRR" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invites&utm_medium=copy_link&utm_content=lmtj301" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://www.youtube.com/@TNVImpactTV" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+        <a href="https://chat.whatsapp.com/JNgNHs6fLrA5HYrGre7hBh?s=cl&p=a&mlu=0&amv=3" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp group"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
       </div>
     </div>
     <div class="footer-col">
@@ -197,25 +207,33 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 KSOME Companies Limited. All rights reserved.</span>
+    <span>© 2026 KSOME Companies Limited. All rights reserved.</span>
     <span>Designed by <a href="about.html">Isaac Kayode Oladipo</a></span>
   </div>
 </footer>
 
 <script>
 function toggleMenu() {
-  document.getElementById('mobileMenu').classList.toggle('open');
+  var m = document.getElementById('mobileMenu');
+  var open = m.classList.toggle('open');
+  document.querySelector('.hamburger').setAttribute('aria-expanded', open);
 }
+document.querySelectorAll('#mobileMenu a').forEach(function (a) {
+  a.addEventListener('click', function () {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.querySelector('.hamburger').setAttribute('aria-expanded', 'false');
+  });
+});
 </script>
 
 <!-- KSOME AI Floating Button -->
-<button id="ksome-ai-btn">🤖 Ask KSOME AI</button>
+<button id="ksome-ai-btn" aria-label="Open KSOME AI chat">🤖 Ask KSOME AI</button>
 
 <!-- AI Chat Box -->
 <div id="ksome-ai-chat" class="hidden">
   <div class="ai-header">
     <span>🤖 KSOME AI</span>
-    <button id="close-ai">✖</button>
+    <button id="close-ai" aria-label="Close chat">✖</button>
   </div>
 
   <div id="ai-messages">
@@ -225,7 +243,7 @@ function toggleMenu() {
   </div>
 
   <div class="ai-input">
-    <input type="text" id="user-message" placeholder="Ask KSOME AI...">
+    <input type="text" id="user-message" placeholder="Ask KSOME AI..." aria-label="Message KSOME AI">
     <button id="send-ai">Send</button>
   </div>
 </div>
