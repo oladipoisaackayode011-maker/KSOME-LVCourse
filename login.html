@@ -2,40 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login – KSOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Login – KSOME Media Academy</title>
+  <meta name="description" content="Sign in to your KSOME Media Academy account to access your courses and dashboard.">
+  <meta name="theme-color" content="#0b1736">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="auth-page">
+<main class="auth-page">
   <div class="auth-box">
     <div class="auth-logo">KSOME</div>
     <h2>Welcome Back</h2>
     <p class="sub">Sign in to access your courses and dashboard</p>
 
-    <p id="msg" style="font-weight:700; text-align:center; margin-bottom:0.75rem;"></p>
+    <p id="msg" class="auth-msg" role="status" aria-live="polite"></p>
 
     <div class="form-group">
-      <label>Email Address</label>
-      <input type="email" id="loginEmail" placeholder="Enter your email">
+      <label for="loginEmail">Email Address</label>
+      <input type="email" id="loginEmail" placeholder="Enter your email" autocomplete="email" inputmode="email">
     </div>
     <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="loginPassword" placeholder="Enter your password">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password">
     </div>
 
-    <button class="btn-primary" style="width:100%; padding:0.85rem; font-size:1rem; margin-top:0.5rem;" onclick="login()">Login</button>
+    <button class="btn-primary btn-block" id="loginBtn" style="margin-top:0.5rem;" onclick="login()">Login</button>
 
     <div class="auth-link" style="margin-top:1rem;">
-      <a href="#" style="color:rgba(255,255,255,0.4); font-size:0.82rem;">Forgot your password?</a>
+      <a href="forgot-password.html" id="forgotLink" class="auth-forgot">Forgot your password?</a>
     </div>
 
     <div class="divider">or sign in with</div>
 
     <div class="auth-social">
-      <a href="https://www.fb.com/l/6lp1kJRRR" title="Facebook" target="_blank">f</a>
-      <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invites&utm_medium=copy_link&utm_content=lmtj301" title="Instagram" target="_blank">ig</a>
+      <a href="https://www.fb.com/l/6lp1kJRRR" title="Facebook" target="_blank" rel="noopener noreferrer">f</a>
+      <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invites&utm_medium=copy_link&utm_content=lmtj301" title="Instagram" target="_blank" rel="noopener noreferrer">ig</a>
       <a href="#" title="Google">G</a>
     </div>
 
@@ -44,12 +49,24 @@
     </div>
 
     <div class="auth-link" style="margin-top:0.5rem;">
-      <a href="index.html" style="color:rgba(255,255,255,0.35); font-size:0.8rem;">← Back to Home</a>
+      <a href="index.html" class="auth-muted">← Back to Home</a>
     </div>
   </div>
-</div>
+</main>
 
 <script type="module" src="js/auth.js"></script>
+<script>
+  // Press Enter in either field to log in; carry the typed email over to the reset page.
+  ['loginEmail', 'loginPassword'].forEach(function (id) {
+    document.getElementById(id).addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && typeof window.login === 'function') { e.preventDefault(); window.login(); }
+    });
+  });
+  document.getElementById('forgotLink').addEventListener('click', function () {
+    var v = document.getElementById('loginEmail').value.trim();
+    if (v) this.href = 'forgot-password.html?email=' + encodeURIComponent(v);
+  });
+</script>
 
 </body>
 </html>
